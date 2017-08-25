@@ -90,15 +90,15 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 
 	// player toolbar
 	dom.toolbar = $('div',
-		{ class: `${prefix}-toolbar`, role: 'toolbar' },
+		{ class: `${prefix}-toolbar`, role: 'toolbar', 'aria-label': lang.player },
 		dom.play, dom.mute, dom.currentTime, dom.remainingTime, dom.volume, dom.time, dom.download, dom.fullscreen
 	);
 
 	// player
-	const player = dom.player = $('div', { class: `${prefix}-player`, role: 'group', 'aria-label': lang.player }, dom.toolbar);
+	const player = dom.player = $('div', { class: `${prefix}-player`, role: 'region', 'aria-label': lang.player }, dom.toolbar);
 
 	// update media class and controls
-	$(media, { class: `${prefix}-media`, playsinline: '', 'webkit-playsinline': '' }).controls = false;
+	$(media, { class: `${prefix}-media`, playsinline: '', 'webkit-playsinline': '', role: 'img' }).controls = false;
 
 	// replace the media element with the media player
 	if (media.parentNode) {
