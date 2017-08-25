@@ -5,7 +5,8 @@ html {
 }
 
 body {
-	margin: 2.5%;
+	margin: 1.25em;
+	padding: 0 calc((100% - 60em) / 2);
 }
 
 h1 {
@@ -15,11 +16,6 @@ h1 {
 
 a {
 	color: currentColor;
-}
-
-.media-player {
-	margin: 1.25em auto;
-	max-width: 60em;
 }
 
 .media-control[dir="rtl"] {
