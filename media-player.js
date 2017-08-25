@@ -56,12 +56,12 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 
 	// play/pause toggle
 	dom.playText = document.createTextNode(lang.play);
-	dom.play = $('button', { class: `${prefix}-control ${prefix}-${show.play ? 'visible' : 'hidden'} ${prefix}-play`, 'aria-label': lang.play, 'aria-pressed': false, 'data-dir': dir, click: onPlayClick, keydown: onTimelineKeydown }, dom.playText);
+	dom.play = $('button', { class: `${prefix}-control ${prefix}-${show.play ? 'visible' : 'hidden'} ${prefix}-play`, 'aria-label': lang.play, 'aria-pressed': false, 'data-dir': dir, click: onPlayClick, keydown: onTimeKeydown }, dom.playText);
 
 	// time slider
 	dom.timeMeter = $('div', { class: `${prefix}-meter ${prefix}-time-meter` });
 	dom.timeRange = $('div', { class: `${prefix}-range ${prefix}-time-range` }, dom.timeMeter);
-	dom.time = $('button', { class: `${prefix}-slider ${prefix}-${show.time ? 'visible' : 'hidden'} ${prefix}-time`, role: 'slider', 'aria-label': lang.currentTime, 'data-dir': dir, click: onTimelineClick, keydown: onTimelineKeydown }, dom.timeRange);
+	dom.time = $('button', { class: `${prefix}-slider ${prefix}-${show.time ? 'visible' : 'hidden'} ${prefix}-time`, role: 'slider', 'aria-label': lang.currentTime, 'data-dir': dir, click: onTimeClick, keydown: onTimeKeydown }, dom.timeRange);
 
 	// current time text
 	dom.currentTimeText = document.createTextNode('00:00');
@@ -221,7 +221,7 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 	}
 
 	// when the time control
-	function onTimelineClick(event) {
+	function onTimeClick(event) {
 		// handle click if clicked without pointer
 		if (!event.pointerType && !event.detail) {
 			onPlayClick(event);
@@ -268,7 +268,7 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 	}
 
 	// keydown from play control or current time control
-	function onTimelineKeydown({ keyCode, shiftKey } = event) {
+	function onTimeKeydown({ keyCode, shiftKey } = event) {
 		// 37: LEFT, 38 is UP, 39: RIGHT, 40: DOWN
 		if (37 <= keyCode && 40 >= keyCode) {
 			event.preventDefault();
