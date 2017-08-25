@@ -1,8 +1,7 @@
 :root {
-	--player-back-color: #ffffff;
-	--player-fill-color: #000000;
-	--player-back-enter-color: color(#9999ff a(25%));
-	--player-fill-enter-color: #0066bb;
+	--player-enter-color: color(#9999ff a(25%));
+	--player-back-fullscreen-color: color(#000000 a(75%));
+	--player-fill-fullscreen-color: #ffffff;
 	--player-range-color: #cccccc;
 	--player-meter-color: #0088dd;
 
@@ -27,6 +26,15 @@
 		cursor: default;
 		display: flex;
 		flex-wrap: wrap;
+
+		@nest :fullscreen & {
+			background-color: var(--player-back-fullscreen-color);
+			color: var(--player-fill-fullscreen-color);
+			inset-block-end: 0;
+			inset-inline: 0;
+			opacity: .8;
+			position: absolute;
+		}
 	};
 
 	--player-control-styles: {
@@ -39,12 +47,7 @@
 		text-decoration: none;
 
 		&:matches(:hover, :focus, [aria-pressed="true"]) {
-			color: var(--player-fill-enter-color);
-		}
-
-		&:focus {
-			background-color: var(--player-back-enter-color);
-			outline-width: 0;
+			background-color: var(--player-enter-color);
 		}
 	};
 
@@ -56,8 +59,7 @@
 		padding: .625em .5em;
 
 		&:focus {
-			background-color: var(--player-back-enter-color);
-			outline-width: 0;
+			background-color: var(--player-enter-color);
 		}
 	};
 
