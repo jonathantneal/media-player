@@ -268,7 +268,9 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 	}
 
 	// keydown from play control or current time control
-	function onTimeKeydown({ keyCode, shiftKey } = event) {
+	function onTimeKeydown(event) {
+		const { keyCode, shiftKey } = event;
+
 		// 37: LEFT, 38 is UP, 39: RIGHT, 40: DOWN
 		if (37 <= keyCode && 40 >= keyCode) {
 			event.preventDefault();
@@ -283,7 +285,9 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 	}
 
 	// keydown from mute control or volume control
-	function onVolumeKeydown({ keyCode, shiftKey } = event) {
+	function onVolumeKeydown(event) {
+		const { keyCode, shiftKey } = event;
+
 		// 37: LEFT, 38 is UP, 39: RIGHT, 40: DOWN
 		if (37 <= keyCode && 40 >= keyCode) {
 			event.preventDefault();
