@@ -107,8 +107,10 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 			dom.toolbar
 		);
 
+		const fullscreenchange = 'onfullscreenchange' in player ? 'fullscreenchange' : 'onwebkitfullscreenchange' in player ? 'webkitfullscreenchange' : 'onmozfullscreenchange' in player ? 'mozfullscreenchange' : 'onMSFullscreenChange' in player ? 'MSFullscreenChange' : 'fullscreenchange';
+
 		// fullscreen changes
-		player.ownerDocument.addEventListener(getFullscreenChange(player), onFullscreenChange);
+		player.ownerDocument.addEventListener(fullscreenchange, onFullscreenChange);
 	}
 
 	/* Interval Events
@@ -250,6 +252,9 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 		if (getFullscreenElement(document)) {
 			// exit fullscreen
 			exitFullscreen.call(document);
+		} else if (requestFullscreen) {
+			// enter fullscreen
+			requestFullscreen.call(player);
 		} else if (media.webkitSupportsFullscreen) {
 			// iOS allows fullscreen of the video itself
 			if (media.webkitDisplayingFullscreen) {
@@ -259,9 +264,6 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 				// enter ios fullscreen
 				media.webkitEnterFullscreen();
 			}
-		} else {
-			// enter fullscreen
-			requestFullscreen.call(player);
 		}
 	}
 
@@ -418,8 +420,4 @@ function dispatchCustomEvent(node, type) {
 
 function getFullscreenElement(document) {
 	return document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
-}
-
-function getFullscreenChange(node) {
-	return 'onfullscreenchange' in node ? 'fullscreenchange' : 'onwebkitfullscreenchange' in node ? 'webkitfullscreenchange' : 'onmozfullscreenchange' in node ? 'mozfullscreenchange' : 'onMSFullscreenChange' in node ? 'MSFullscreenChange' : 'fullscreenchange';
 }
