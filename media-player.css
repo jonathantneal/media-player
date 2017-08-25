@@ -1,0 +1,128 @@
+:root {
+	--player-back-color: #ffffff;
+	--player-fill-color: #000000;
+	--player-back-enter-color: color(#9999ff a(25%));
+	--player-fill-enter-color: #0066bb;
+	--player-range-color: #cccccc;
+	--player-meter-color: #0088dd;
+
+	--player-unset-touch-actions-styles: {
+		-webkit-tap-highlight-color: transparent; // stylelint-disable-line property-no-vendor-prefix
+		-webkit-touch-callout: none; // stylelint-disable-line property-no-vendor-prefix
+		-webkit-user-select: none; // stylelint-disable-line property-no-vendor-prefix
+	};
+
+	--player-unset-button-styles: {
+		background-color: transparent;
+		border-style: none;
+		color: inherit;
+		font: inherit;
+		margin: 0;
+		overflow: visible;
+		padding: 0;
+	};
+
+	--player-toolbar-styles: {
+		align-items: center;
+		cursor: default;
+		display: flex;
+		flex-wrap: wrap;
+	};
+
+	--player-control-styles: {
+		@apply --player-unset-button-styles;
+		@apply --player-unset-touch-actions-styles;
+
+		font-size: 75%;
+		line-height: 1;
+		padding: 1.16667em;
+		text-decoration: none;
+
+		&:matches(:hover, :focus, [aria-pressed="true"]) {
+			color: var(--player-fill-enter-color);
+		}
+
+		&:focus {
+			background-color: var(--player-back-enter-color);
+			outline-width: 0;
+		}
+	};
+
+	--player-slider-styles: {
+		@apply --player-unset-button-styles;
+		@apply --player-unset-touch-actions-styles;
+
+		height: 2.5em;
+		padding: .625em .5em;
+
+		&:focus {
+			background-color: var(--player-back-enter-color);
+			outline-width: 0;
+		}
+	};
+
+	--player-range-styles: {
+		background-color: var(--player-range-color);
+		display: block;
+		font-size: 75%;
+		size: 100% 1em;
+	};
+
+	--player-meter-styles: {
+		background-color: var(--player-meter-color);
+		display: block;
+		overflow: hidden;
+		size: 0 1em;
+	};
+
+	--player-text-styles: {
+		font-size: 75%;
+		padding-inline: .5em;
+		width: 2.5em;
+	};
+}
+
+.media-toolbar {
+	@apply --player-toolbar-styles;
+}
+
+.media-hidden {
+	display: none;
+}
+
+.media-media {
+	display: block;
+	margin-inline: auto;
+	max-height: 100vh;
+	max-width: 100%;
+	position: relative;
+}
+
+.media-slider {
+	@apply --player-slider-styles;
+}
+
+.media-time {
+	flex-grow: 1;
+	flex-shrink: 1;
+}
+
+.media-volume {
+	flex-basis: 5em;
+}
+
+.media-range {
+	@apply --player-range-styles;
+}
+
+.media-meter {
+	@apply --player-meter-styles;
+}
+
+.media-text {
+	@apply --player-text-styles;
+}
+
+.media-control {
+	@apply --player-control-styles;
+}

@@ -1,0 +1,51 @@
+.media-player:-webkit-full-screen {
+	background-color: #000000;
+	color: #ffffff;
+	margin: 0;
+	max-width: none;
+} :-webkit-full-screen .media-toolbar {
+	bottom: 0;
+	left: 0;
+	opacity: .8;
+	position: absolute;
+	right: 0;
+}
+
+.media-player:-moz-full-screen {
+	background-color: #000000;
+	color: #ffffff;
+	margin: 0;
+	max-width: none;
+} :-moz-full-screen .media-toolbar {
+	bottom: 0;
+	left: 0;
+	opacity: .8;
+	position: absolute;
+	right: 0;
+}
+
+.media-player:-ms-fullscreen {
+	background-color: #000000;
+	color: #ffffff;
+	margin: 0;
+	max-width: none;
+} :-ms-fullscreen .media-toolbar {
+	bottom: 0;
+	left: 0;
+	opacity: .8;
+	position: absolute;
+	right: 0;
+}
+
+.media-player:fullscreen {
+	background-color: #000000;
+	color: #ffffff;
+	margin: 0;
+	max-width: none;
+} :fullscreen .media-toolbar {
+	bottom: 0;
+	left: 0;
+	opacity: .8;
+	position: absolute;
+	right: 0;
+}

@@ -1,0 +1,9 @@
+dist
+node_modules
+.*
+!.appveyor.yml
+!.gitignore
+!.travis.yml
+*.log*
+media-player.cjs.js
+package-lock.json

@@ -1,0 +1,89 @@
+{
+  "name": "mediaplayer",
+  "version": "0.1.0",
+  "description": "A tiny, responsive, international, accessible, easily customizable media player",
+  "author": "Jonathan Neal <jonathantneal@hotmail.com>",
+  "license": "CC0-1.0",
+  "repository": "jonathantneal/media-player",
+  "homepage": "https://github.com/jonathantneal/media-player#readme",
+  "bugs": "https://github.com/jonathantneal/media-player/issues",
+  "main": "media-player.cjs.js",
+  "module": "media-player.js",
+  "style": "media-player.css",
+  "files": [
+    "media-player.js",
+    "media-player.cjs.js",
+    "media-player.css"
+  ],
+  "scripts": {
+    "build": "babel media-player.js --out-file media-player.cjs.js",
+    "clean": "git clean -X -d -f",
+    "prepublish": "npm run test && npm run build",
+    "start": "gulp --cwd . --gulpfile node_modules/gulp-config-dev",
+    "test": "echo 'Running tests...'; npm run test:css && npm run test:js",
+    "test:css": "stylelint --syntax scss *.css",
+    "test:js": "eslint media-player.js placeholders/*.js --cache --ignore-pattern .gitignore"
+  },
+  "engines": {
+    "node": ">=4.0.0"
+  },
+  "browserslist": [
+    "ie 11",
+    "last 2 android versions",
+    "last 2 chrome versions",
+    "last 2 edge versions",
+    "last 2 firefox versions",
+    "last 2 ios versions",
+    "last 2 safari versions"
+  ],
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
+    "eslint": "^4.5.0",
+    "eslint-config-dev": "^2.0.0",
+    "gulp-config-dev": "^3.13.1",
+    "pre-commit": "^1.2.2",
+    "stylelint": "^8.0.0",
+    "stylelint-config-dev": "^2.0.0"
+  },
+  "babel": {
+    "presets": [
+      [
+        "env",
+        {
+          "loose": true,
+          "targets": {
+            "node": "4"
+          }
+        }
+      ]
+    ]
+  },
+  "eslintConfig": {
+    "extends": "dev"
+  },
+  "gulpConfig": {
+    "html": false,
+    "css-dest": "media-player.css",
+    "js": "media-player.js",
+    "js-dest": "media-player.js",
+    "js-module-name": "MediaPlayer",
+    "use-sass": false
+  },
+  "stylelint": {
+    "extends": "stylelint-config-dev"
+  },
+  "keywords": [
+    "media",
+    "audio",
+    "video",
+    "player",
+    "customizable",
+    "international",
+    "accessible",
+    "cross browser",
+    "aria",
+    "dom",
+    "controls"
+  ]
+}
