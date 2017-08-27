@@ -25,20 +25,6 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 	lang.seconds = lang.seconds || 'seconds';
 	lang.volume = lang.volume || 'volume';
 
-	/* Show
-	/* ====================================================================== */
-
-	const show = opts.show = Object(opts.show);
-
-	show.play = 'play' in show ? show.play : true;
-	show.mute = 'mute' in show ? show.mute : true;
-	show.currentTime = 'currentTime' in show ? show.currentTime : true;
-	show.remainingTime = 'remainingTime' in show ? show.remainingTime : true;
-	show.volume = 'volume' in show ? show.volume : true;
-	show.time = 'time' in show ? show.time : true;
-	show.download = 'download' in show ? show.download : true;
-	show.fullscreen = 'fullscreen' in show ? show.fullscreen : true;
-
 	/* Elements
 	/* ====================================================================== */
 
@@ -56,37 +42,37 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 
 	// play/pause toggle
 	dom.playText = document.createTextNode(lang.play);
-	dom.play = $('button', { class: `${prefix}-control ${prefix}-${show.play ? 'visible' : 'hidden'} ${prefix}-play`, 'aria-label': lang.play, 'aria-pressed': false, 'data-dir': dir, click: onPlayClick, keydown: onTimeKeydown }, dom.playText);
+	dom.play = $('button', { class: `${prefix}-control ${prefix}-play`, 'aria-label': lang.play, 'aria-pressed': false, 'data-dir': dir, click: onPlayClick, keydown: onTimeKeydown }, dom.playText);
 
 	// time slider
 	dom.timeMeter = $('div', { class: `${prefix}-meter ${prefix}-time-meter` });
 	dom.timeRange = $('div', { class: `${prefix}-range ${prefix}-time-range` }, dom.timeMeter);
-	dom.time = $('button', { class: `${prefix}-slider ${prefix}-${show.time ? 'visible' : 'hidden'} ${prefix}-time`, role: 'slider', 'aria-label': lang.currentTime, 'data-dir': dir, click: onTimeClick, keydown: onTimeKeydown }, dom.timeRange);
+	dom.time = $('button', { class: `${prefix}-slider`, role: 'slider', 'aria-label': lang.currentTime, 'data-dir': dir, click: onTimeClick, keydown: onTimeKeydown }, dom.timeRange);
 
 	// current time text
 	dom.currentTimeText = document.createTextNode('00:00');
-	dom.currentTime = $('span', { class: `${prefix}-text ${prefix}-${show.currentTime ? 'visible' : 'hidden'} ${prefix}-current-time`, role: 'timer', 'aria-label': lang.currentTime }, dom.currentTimeText);
+	dom.currentTime = $('span', { class: `${prefix}-text ${prefix}-current-time`, role: 'timer', 'aria-label': lang.currentTime }, dom.currentTimeText);
 
 	// remaining time text
 	dom.remainingTimeText = document.createTextNode('00:00');
-	dom.remainingTime = $('span', { class: `${prefix}-text ${prefix}-${show.remainingTime ? 'visible' : 'hidden'} ${prefix}-remaining-time`, role: 'timer', 'aria-label': lang.remainingTime }, dom.remainingTimeText);
+	dom.remainingTime = $('span', { class: `${prefix}-text ${prefix}-remaining-time`, role: 'timer', 'aria-label': lang.remainingTime }, dom.remainingTimeText);
 
 	// mute/unmute toggle
 	dom.muteText = document.createTextNode(lang.mute);
-	dom.mute = $('button', { class: `${prefix}-control ${prefix}-${show.mute ? 'visible' : 'hidden'} ${prefix}-mute`, 'aria-label': lang.mute, 'aria-pressed': false, 'data-dir': dir, click: onMuteClick, keydown: onVolumeKeydown }, dom.muteText);
+	dom.mute = $('button', { class: `${prefix}-control ${prefix}-mute`, 'aria-label': lang.mute, 'aria-pressed': false, 'data-dir': dir, click: onMuteClick, keydown: onVolumeKeydown }, dom.muteText);
 
 	// volume slider
 	dom.volumeMeter = $('span', { class: `${prefix}-meter ${prefix}-volume-meter` });
 	dom.volumeRange = $('span', { class: `${prefix}-range ${prefix}-volume-range` }, dom.volumeMeter);
-	dom.volume = $('button', { class: `${prefix}-slider ${prefix}-${show.volume ? 'visible' : 'hidden'} ${prefix}-volume`, role: 'slider', 'aria-label': lang.volume, 'data-dir': dir, click: onVolumeClick, keydown: onVolumeKeydown }, dom.volumeRange);
+	dom.volume = $('button', { class: `${prefix}-slider ${prefix}-volume`, role: 'slider', 'aria-label': lang.volume, 'data-dir': dir, click: onVolumeClick, keydown: onVolumeKeydown }, dom.volumeRange);
 
 	// download link
 	dom.downloadText = document.createTextNode(lang.download);
-	dom.download = $('a', { class: `${prefix}-control ${prefix}-${show.download ? 'visible' : 'hidden'} ${prefix}-download`, href: media.src, download: media.src, 'aria-label': lang.download, 'data-dir': dir }, dom.downloadText);
+	dom.download = $('a', { class: `${prefix}-control ${prefix}-download`, href: media.src, download: media.src, 'aria-label': lang.download, 'data-dir': dir }, dom.downloadText);
 
 	// fullscreen link
 	dom.fullscreenText = document.createTextNode(lang.fullscreen);
-	dom.fullscreen = $('button', { class: `${prefix}-control ${prefix}-${show.fullscreen ? 'visible' : 'hidden'} ${prefix}-fullscreen`, 'aria-label': lang.fullscreen, 'aria-pressed': false, 'data-dir': dir, click: onFullscreenClick }, dom.fullscreenText);
+	dom.fullscreen = $('button', { class: `${prefix}-control ${prefix}-fullscreen`, 'aria-label': lang.fullscreen, 'aria-pressed': false, 'data-dir': dir, click: onFullscreenClick }, dom.fullscreenText);
 
 	// player toolbar
 	dom.toolbar = $('div',
