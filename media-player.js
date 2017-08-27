@@ -383,17 +383,17 @@ function timeToAural(time, langMinutes, langSeconds) {
 
 function $(rawid) {
 	const id = rawid instanceof Node ? rawid : document.createElement(rawid);
-	const opts = [].slice.call(arguments, 1);
+	const args = [].slice.call(arguments, 1);
 
-	for (let index in opts) {
-		if (opts[index] instanceof Node) {
-			id.appendChild(opts[index]);
-		} else if (Object(opts[index]) === opts[index]) {
-			for (let attr in opts[index]) {
-				if ('function' === typeof opts[index][attr]) {
-					id.addEventListener(attr, opts[index][attr]);
+	for (let index in args) {
+		if (args[index] instanceof Node) {
+			id.appendChild(args[index]);
+		} else if (Object(args[index]) === args[index]) {
+			for (let attr in args[index]) {
+				if ('function' === typeof args[index][attr]) {
+					id.addEventListener(attr, args[index][attr]);
 				} else {
-					id.setAttribute(attr, opts[index][attr]);
+					id.setAttribute(attr, args[index][attr]);
 				}
 			}
 		}
