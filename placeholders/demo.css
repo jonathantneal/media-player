@@ -17,19 +17,3 @@ h1 {
 a {
 	color: currentColor;
 }
-
-.media-control[dir="rtl"] {
-	transform: scaleX(-1);
-}
-
-.media-symbol {
-	display: block;
-	fill: currentColor;
-	height: 1em;
-	width: 1em;
-}
-
-[aria-pressed="false"] > .media-pressed,
-[aria-pressed="true"] > .media-released {
-	display: none;
-}

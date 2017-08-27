@@ -9,8 +9,7 @@
 .play-list {
 	letter-spacing: .1em;
 	list-style-type: none;
-	margin: -1.25em auto 1.25em;
-	max-width: 60em;
+	margin: 0;
 	padding: 0;
 }
 
