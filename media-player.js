@@ -8,12 +8,9 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 	const self = this;
 	const opts = Object(rawopts);
 	const prefix = opts.prefix || 'media';
-	const dir = /^(btt|ltr|rtl|ttb)$/i.test(opts.dir) ? String(opts.dir).toLowerCase() : getComputedStyle(media).direction;
-
-	/* Language
-	/* ====================================================================== */
-
-	const lang = opts.lang = Object(opts.lang);
+	const dir  = /^(btt|ltr|rtl|ttb)$/i.test(opts.dir) ? String(opts.dir).toLowerCase() : getComputedStyle(media).direction;
+	const lang = Object(opts.lang);
+	const svgs = Object(opts.svgs);
 
 	/* Elements
 	/* ====================================================================== */
@@ -29,8 +26,9 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 	});
 
 	// play/pause toggle
-	self.playText = document.createTextNode(lang.play || 'play');
-	self.play = $('button', { class: `${prefix}-control ${prefix}-play`, 'aria-label': lang.play || 'play', 'aria-pressed': false, 'data-dir': dir, click: onPlayClick, keydown: onTimeKeydown }, self.playText);
+	self.playSymbol = svg(prefix, svgs, 'play', 'play');
+	self.pauseSymbol = svg(prefix, svgs, 'pause', 'pause');
+	self.play = $('button', { class: `${prefix}-control ${prefix}-play`, 'data-dir': dir, click: onPlayClick, keydown: onTimeKeydown }, self.playSymbol, self.pauseSymbol);
 
 	// time slider
 	self.timeMeter = $('div', { class: `${prefix}-meter ${prefix}-time-meter` });
@@ -38,16 +36,17 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 	self.time = $('button', { class: `${prefix}-slider ${prefix}-time`, role: 'slider', 'aria-label': lang.currentTime || 'current time', 'data-dir': dir, click: onTimeClick, keydown: onTimeKeydown }, self.timeRange);
 
 	// current time text
-	self.currentTimeText = document.createTextNode('00:00');
+	self.currentTimeText = document.createTextNode('');
 	self.currentTime = $('span', { class: `${prefix}-text ${prefix}-current-time`, role: 'timer', 'aria-label': lang.currentTime || 'current time' }, self.currentTimeText);
 
 	// remaining time text
-	self.remainingTimeText = document.createTextNode('00:00');
+	self.remainingTimeText = document.createTextNode('');
 	self.remainingTime = $('span', { class: `${prefix}-text ${prefix}-remaining-time`, role: 'timer', 'aria-label': lang.remainingTime || 'remaining time' }, self.remainingTimeText);
 
 	// mute/unmute toggle
-	self.muteText = document.createTextNode(lang.mute || 'mute');
-	self.mute = $('button', { class: `${prefix}-control ${prefix}-mute`, 'aria-label': lang.mute || 'mute', 'aria-pressed': false, 'data-dir': dir, click: onMuteClick, keydown: onVolumeKeydown }, self.muteText);
+	self.muteSymbol = svg(prefix, svgs, 'mute', lang.mute || 'mute');
+	self.unmuteSymbol = svg(prefix, svgs, 'unmute', lang.unmute || 'unmute');
+	self.mute = $('button', { class: `${prefix}-control ${prefix}-mute`, 'data-dir': dir, click: onMuteClick, keydown: onVolumeKeydown }, self.muteSymbol, self.unmuteSymbol);
 
 	// volume slider
 	self.volumeMeter = $('span', { class: `${prefix}-meter ${prefix}-volume-meter` });
@@ -55,12 +54,13 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 	self.volume = $('button', { class: `${prefix}-slider ${prefix}-volume`, role: 'slider', 'aria-label': lang.volume || 'volume', 'data-dir': dir, click: onVolumeClick, keydown: onVolumeKeydown }, self.volumeRange);
 
 	// download link
-	self.downloadText = document.createTextNode(lang.download || 'download');
-	self.download = $('a', { class: `${prefix}-control ${prefix}-download`, href: media.src, download: media.src, 'aria-label': lang.download || 'download', 'data-dir': dir }, self.downloadText);
+	self.downloadLink = svg(prefix, svgs, 'download', lang.download || 'download');
+	self.download = $('a', { class: `${prefix}-control ${prefix}-download`, href: media.src, download: media.src, 'data-dir': dir }, self.downloadLink);
 
 	// fullscreen link
-	self.fullscreenText = document.createTextNode(lang.fullscreen || 'enter full screen');
-	self.fullscreen = $('button', { class: `${prefix}-control ${prefix}-fullscreen`, 'aria-label': lang.fullscreen || 'enter full screen', 'aria-pressed': false, 'data-dir': dir, click: onFullscreenClick }, self.fullscreenText);
+	self.enterFullscreenSymbol = svg(prefix, svgs, 'enterFullscreen', lang.enterFullscreen || 'enter full screen');
+	self.leaveFullscreenSymbol = svg(prefix, svgs, 'leaveFullscreen', lang.leaveFullscreen || 'leave full screen');
+	self.fullscreen = $('button', { class: `${prefix}-control ${prefix}-fullscreen`, 'data-dir': dir, click: onFullscreenClick }, self.enterFullscreenSymbol, self.leaveFullscreenSymbol);
 
 	// player toolbar
 	self.toolbar = $('div',
@@ -94,14 +94,15 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 	/* Interval Events
 	/* ====================================================================== */
 
-	let paused = true, currentTime, duration, interval;
+	let paused, currentTime, duration, interval;
 
 	// when the play state changes
 	function onPlayChange() {
 		if (paused !== media.paused) {
 			paused = media.paused;
 
-			$(self.play, { 'aria-pressed': !paused });
+			$(self.playSymbol, { 'aria-hidden': !paused });
+			$(self.pauseSymbol, { 'aria-hidden': paused });
 
 			clearInterval(interval);
 
@@ -151,12 +152,16 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 		$(media, { canplaythrough: onCanPlayOnce });
 
 		$(self.download, { href: media.src, download: media.src });
+
+		onPlayChange();
+		onVolumeChange();
+		onFullscreenChange();
+		onTimeChange();
 	}
 
 	// when the immediate current playback position is available
 	function onLoadedData() {
 		onTimeChange();
-		onVolumeChange();
 	}
 
 	// when the media can play
@@ -173,6 +178,7 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 	// when the volume changes
 	function onVolumeChange() {
 		const volumePercentage = media.muted ? 0 : media.volume;
+		const isMuted = !volumePercentage;
 
 		$(self.volume, { 'aria-valuenow': volumePercentage, 'aria-valuemin': 0, 'aria-valuemax': 1 });
 
@@ -181,13 +187,15 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 
 		self.volumeMeter.style[axisProp] = `${volumePercentage * 100}%`;
 
-		$(self.mute, { 'aria-pressed': !volumePercentage });
+		$(self.muteSymbol, { 'aria-hidden': isMuted });
+		$(self.unmuteSymbol, { 'aria-hidden': !isMuted });
 	}
 
 	function onFullscreenChange() {
 		const isFullscreen = player === fullscreenElement();
 
-		$(self.fullscreen, { 'aria-pressed': isFullscreen });
+		$(self.enterFullscreenSymbol, { 'aria-hidden': isFullscreen });
+		$(self.leaveFullscreenSymbol, { 'aria-hidden': !isFullscreen });
 	}
 
 	/* Input Events
@@ -290,6 +298,8 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 	onDrag(self.volume, (percentage) => {
 		media.volume = Math.max(0, Math.min(1, percentage));
 	});
+
+	onLoadStart();
 }
 
 /* Handle Drag Ranges
@@ -387,6 +397,18 @@ function $(rawid) {
 	}
 
 	return id;
+}
+
+function svg(prefix, svgs, type, label) { // eslint-disable-line max-params
+	const svgns = 'http://www.w3.org/2000/svg';
+	const use = document.createElementNS(svgns, 'use');
+
+	use.setAttributeNS('http://www.w3.org/1999/xlink', 'href', svgs[type] || `#symbol-${type}`);
+
+	return $(document.createElementNS(svgns, 'svg'), {
+		class: `${prefix}-symbol ${prefix}-${type}-symbol`,
+		title: label
+	}, use);
 }
 
 /* Dispatch Events

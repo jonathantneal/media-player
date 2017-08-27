@@ -49,6 +49,10 @@
 		&:matches(:hover, :focus, [aria-pressed="true"]) {
 			background-color: var(--player-enter-color);
 		}
+
+		&:dir(rtl) {
+			transform: scaleX(-1);
+		}
 	};
 
 	--player-slider-styles: {
@@ -81,6 +85,17 @@
 		font-size: 75%;
 		padding-inline: .5em;
 		width: 2.5em;
+	};
+
+	--player-symbol-styles: {
+		display: block;
+		fill: currentColor;
+		height: 1em;
+		width: 1em;
+
+		&:matches([aria-hidden="true"]) {
+			display: none;
+		}
 	};
 }
 
@@ -127,4 +142,8 @@
 
 .media-control {
 	@apply --player-control-styles;
+}
+
+.media-symbol {
+	@apply --player-symbol-styles;
 }
