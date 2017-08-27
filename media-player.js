@@ -5,6 +5,7 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 	/* Options
 	/* ====================================================================== */
 
+	const self = this;
 	const opts = Object(rawopts);
 	const prefix = opts.prefix || 'media';
 	const dir = /^(btt|ltr|rtl|ttb)$/i.test(opts.dir) ? String(opts.dir).toLowerCase() : getComputedStyle(media).direction;
@@ -28,9 +29,7 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 	/* Elements
 	/* ====================================================================== */
 
-	const dom = this.dom = {};
-
-	this.media = $(media, {
+	self.media = $(media, {
 		canplaythrough: onCanPlayOnce,
 		loadstart: onLoadStart,
 		loadeddata: onLoadedData,
@@ -41,47 +40,47 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 	});
 
 	// play/pause toggle
-	dom.playText = document.createTextNode(lang.play);
-	dom.play = $('button', { class: `${prefix}-control ${prefix}-play`, 'aria-label': lang.play, 'aria-pressed': false, 'data-dir': dir, click: onPlayClick, keydown: onTimeKeydown }, dom.playText);
+	self.playText = document.createTextNode(lang.play);
+	self.play = $('button', { class: `${prefix}-control ${prefix}-play`, 'aria-label': lang.play, 'aria-pressed': false, 'data-dir': dir, click: onPlayClick, keydown: onTimeKeydown }, self.playText);
 
 	// time slider
-	dom.timeMeter = $('div', { class: `${prefix}-meter ${prefix}-time-meter` });
-	dom.timeRange = $('div', { class: `${prefix}-range ${prefix}-time-range` }, dom.timeMeter);
-	dom.time = $('button', { class: `${prefix}-slider`, role: 'slider', 'aria-label': lang.currentTime, 'data-dir': dir, click: onTimeClick, keydown: onTimeKeydown }, dom.timeRange);
+	self.timeMeter = $('div', { class: `${prefix}-meter ${prefix}-time-meter` });
+	self.timeRange = $('div', { class: `${prefix}-range ${prefix}-time-range` }, self.timeMeter);
+	self.time = $('button', { class: `${prefix}-slider`, role: 'slider', 'aria-label': lang.currentTime, 'data-dir': dir, click: onTimeClick, keydown: onTimeKeydown }, self.timeRange);
 
 	// current time text
-	dom.currentTimeText = document.createTextNode('00:00');
-	dom.currentTime = $('span', { class: `${prefix}-text ${prefix}-current-time`, role: 'timer', 'aria-label': lang.currentTime }, dom.currentTimeText);
+	self.currentTimeText = document.createTextNode('00:00');
+	self.currentTime = $('span', { class: `${prefix}-text ${prefix}-current-time`, role: 'timer', 'aria-label': lang.currentTime }, self.currentTimeText);
 
 	// remaining time text
-	dom.remainingTimeText = document.createTextNode('00:00');
-	dom.remainingTime = $('span', { class: `${prefix}-text ${prefix}-remaining-time`, role: 'timer', 'aria-label': lang.remainingTime }, dom.remainingTimeText);
+	self.remainingTimeText = document.createTextNode('00:00');
+	self.remainingTime = $('span', { class: `${prefix}-text ${prefix}-remaining-time`, role: 'timer', 'aria-label': lang.remainingTime }, self.remainingTimeText);
 
 	// mute/unmute toggle
-	dom.muteText = document.createTextNode(lang.mute);
-	dom.mute = $('button', { class: `${prefix}-control ${prefix}-mute`, 'aria-label': lang.mute, 'aria-pressed': false, 'data-dir': dir, click: onMuteClick, keydown: onVolumeKeydown }, dom.muteText);
+	self.muteText = document.createTextNode(lang.mute);
+	self.mute = $('button', { class: `${prefix}-control ${prefix}-mute`, 'aria-label': lang.mute, 'aria-pressed': false, 'data-dir': dir, click: onMuteClick, keydown: onVolumeKeydown }, self.muteText);
 
 	// volume slider
-	dom.volumeMeter = $('span', { class: `${prefix}-meter ${prefix}-volume-meter` });
-	dom.volumeRange = $('span', { class: `${prefix}-range ${prefix}-volume-range` }, dom.volumeMeter);
-	dom.volume = $('button', { class: `${prefix}-slider ${prefix}-volume`, role: 'slider', 'aria-label': lang.volume, 'data-dir': dir, click: onVolumeClick, keydown: onVolumeKeydown }, dom.volumeRange);
+	self.volumeMeter = $('span', { class: `${prefix}-meter ${prefix}-volume-meter` });
+	self.volumeRange = $('span', { class: `${prefix}-range ${prefix}-volume-range` }, self.volumeMeter);
+	self.volume = $('button', { class: `${prefix}-slider ${prefix}-volume`, role: 'slider', 'aria-label': lang.volume, 'data-dir': dir, click: onVolumeClick, keydown: onVolumeKeydown }, self.volumeRange);
 
 	// download link
-	dom.downloadText = document.createTextNode(lang.download);
-	dom.download = $('a', { class: `${prefix}-control ${prefix}-download`, href: media.src, download: media.src, 'aria-label': lang.download, 'data-dir': dir }, dom.downloadText);
+	self.downloadText = document.createTextNode(lang.download);
+	self.download = $('a', { class: `${prefix}-control ${prefix}-download`, href: media.src, download: media.src, 'aria-label': lang.download, 'data-dir': dir }, self.downloadText);
 
 	// fullscreen link
-	dom.fullscreenText = document.createTextNode(lang.fullscreen);
-	dom.fullscreen = $('button', { class: `${prefix}-control ${prefix}-fullscreen`, 'aria-label': lang.fullscreen, 'aria-pressed': false, 'data-dir': dir, click: onFullscreenClick }, dom.fullscreenText);
+	self.fullscreenText = document.createTextNode(lang.fullscreen);
+	self.fullscreen = $('button', { class: `${prefix}-control ${prefix}-fullscreen`, 'aria-label': lang.fullscreen, 'aria-pressed': false, 'data-dir': dir, click: onFullscreenClick }, self.fullscreenText);
 
 	// player toolbar
-	dom.toolbar = $('div',
+	self.toolbar = $('div',
 		{ class: `${prefix}-toolbar`, role: 'toolbar', 'aria-label': lang.player },
-		dom.play, dom.mute, dom.currentTime, dom.remainingTime, dom.volume, dom.time, dom.download, dom.fullscreen
+		self.play, self.mute, self.currentTime, self.remainingTime, self.volume, self.time, self.download, self.fullscreen
 	);
 
 	// player
-	const player = dom.player = $('div', { class: `${prefix}-player`, role: 'region', 'aria-label': lang.player }, dom.toolbar);
+	const player = self.player = $('div', { class: `${prefix}-player`, role: 'region', 'aria-label': lang.player }, self.toolbar);
 
 	// update media class and controls
 	$(media, { class: `${prefix}-media`, playsinline: '', 'webkit-playsinline': '', role: 'img' }).controls = false;
@@ -90,7 +89,7 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 	if (media.parentNode) {
 		player.insertBefore(
 			media.parentNode.replaceChild(player, media),
-			dom.toolbar
+			self.toolbar
 		);
 
 		const fullscreenchange = 'onfullscreenchange' in player ? 'fullscreenchange' : 'onwebkitfullscreenchange' in player ? 'webkitfullscreenchange' : 'onmozfullscreenchange' in player ? 'mozfullscreenchange' : 'onMSFullscreenChange' in player ? 'MSFullscreenChange' : 'fullscreenchange';
@@ -109,7 +108,7 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 		if (paused !== media.paused) {
 			paused = media.paused;
 
-			$(dom.play, { 'aria-pressed': !paused });
+			$(self.play, { 'aria-pressed': !paused });
 
 			clearInterval(interval);
 
@@ -132,24 +131,24 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 			const currentTimeCode = timeToTimecode(currentTime);
 			const remainingTimeCode = timeToTimecode(duration - Math.floor(currentTime));
 
-			if (currentTimeCode !== dom.currentTimeText.nodeValue) {
-				dom.currentTimeText.nodeValue = currentTimeCode;
+			if (currentTimeCode !== self.currentTimeText.nodeValue) {
+				self.currentTimeText.nodeValue = currentTimeCode;
 
-				$(dom.currentTime, { title: `${timeToAural(currentTime, lang.minutes, lang.seconds)}` });
+				$(self.currentTime, { title: `${timeToAural(currentTime, lang.minutes, lang.seconds)}` });
 			}
 
-			if (remainingTimeCode !== dom.remainingTimeText.nodeValue) {
-				dom.remainingTimeText.nodeValue = remainingTimeCode;
+			if (remainingTimeCode !== self.remainingTimeText.nodeValue) {
+				self.remainingTimeText.nodeValue = remainingTimeCode;
 
-				$(dom.remainingTime, { title: `${timeToAural(duration - currentTime, lang.minutes, lang.seconds)}` });
+				$(self.remainingTime, { title: `${timeToAural(duration - currentTime, lang.minutes, lang.seconds)}` });
 			}
 
-			$(dom.time, { 'aria-valuenow': currentTime, 'aria-valuemin': 0, 'aria-valuemax': duration });
+			$(self.time, { 'aria-valuenow': currentTime, 'aria-valuemin': 0, 'aria-valuemax': duration });
 
-			const dirIsInline = /^(ltr|rtl)$/i.test(dom.time.getAttribute('data-dir'));
+			const dirIsInline = /^(ltr|rtl)$/i.test(self.time.getAttribute('data-dir'));
 			const axisProp = dirIsInline ? 'width' : 'height';
 
-			dom.timeMeter.style[axisProp] = `${currentTimePercentage * 100}%`;
+			self.timeMeter.style[axisProp] = `${currentTimePercentage * 100}%`;
 
 			dispatchCustomEvent(media, 'timechange');
 		}
@@ -158,7 +157,7 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 	function onLoadStart() {
 		$(media, { canplaythrough: onCanPlayOnce });
 
-		$(dom.download, { href: media.src, download: media.src });
+		$(self.download, { href: media.src, download: media.src });
 	}
 
 	// when the immediate current playback position is available
@@ -182,18 +181,18 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 	function onVolumeChange() {
 		const volumePercentage = media.muted ? 0 : media.volume;
 
-		$(dom.volume, { 'aria-valuenow': volumePercentage, 'aria-valuemin': 0, 'aria-valuemax': 1 });
+		$(self.volume, { 'aria-valuenow': volumePercentage, 'aria-valuemin': 0, 'aria-valuemax': 1 });
 
-		const dirIsInline = /^(ltr|rtl)$/i.test(dom.volume.getAttribute('data-dir'));
+		const dirIsInline = /^(ltr|rtl)$/i.test(self.volume.getAttribute('data-dir'));
 		const axisProp = dirIsInline ? 'width' : 'height';
 
-		dom.volumeMeter.style[axisProp] = `${volumePercentage * 100}%`;
+		self.volumeMeter.style[axisProp] = `${volumePercentage * 100}%`;
 
-		$(dom.mute, { 'aria-pressed': !volumePercentage });
+		$(self.mute, { 'aria-pressed': !volumePercentage });
 	}
 
 	function onFullscreenChange() {
-		$(dom.fullscreen, { 'aria-pressed': player === getFullscreenElement(player.ownerDocument) })
+		$(self.fullscreen, { 'aria-pressed': player === getFullscreenElement(player.ownerDocument) })
 	}
 
 	/* Input Events
@@ -261,7 +260,7 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 		if (37 <= keyCode && 40 >= keyCode) {
 			event.preventDefault();
 
-			const isLTR = 'ltr' === getComputedStyle(dom.time).direction;
+			const isLTR = 'ltr' === getComputedStyle(self.time).direction;
 			const offset = 37 === keyCode || 39 === keyCode ? keyCode - 38 : keyCode - 39;
 
 			media.currentTime = Math.max(0, Math.min(duration, currentTime + offset * (isLTR ? 1 : -1) * (shiftKey ? 10 : 1)));
@@ -278,7 +277,7 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 		if (37 <= keyCode && 40 >= keyCode) {
 			event.preventDefault();
 
-			const isLTR = 'ltr' === getComputedStyle(dom.time).direction;
+			const isLTR = 'ltr' === getComputedStyle(self.time).direction;
 			const offset = 37 === keyCode || 39 === keyCode ? keyCode - 38 : isLTR ? 39 - keyCode : keyCode - 39;
 
 			media.volume = Math.max(0, Math.min(1, media.volume + offset * (isLTR ? 0.1 : -0.1) * (shiftKey ? 1 : 0.2)));
@@ -286,14 +285,14 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 	}
 
 	// pointer events from time control
-	onDrag(dom.time, (percentage) => {
+	onDrag(self.time, (percentage) => {
 		media.currentTime = duration * Math.max(0, Math.min(1, percentage));
 
 		onTimeChange();
 	});
 
 	// pointer events from volume control
-	onDrag(dom.volume, (percentage) => {
+	onDrag(self.volume, (percentage) => {
 		media.volume = Math.max(0, Math.min(1, percentage));
 	});
 }
