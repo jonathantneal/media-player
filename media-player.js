@@ -35,7 +35,7 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 	// time slider
 	self.timeMeter = $('div', { class: `${prefix}-meter ${prefix}-time-meter` });
 	self.timeRange = $('div', { class: `${prefix}-range ${prefix}-time-range` }, self.timeMeter);
-	self.time = $('button', { class: `${prefix}-slider`, role: 'slider', 'aria-label': lang.currentTime || 'current time', 'data-dir': dir, click: onTimeClick, keydown: onTimeKeydown }, self.timeRange);
+	self.time = $('button', { class: `${prefix}-slider ${prefix}-time`, role: 'slider', 'aria-label': lang.currentTime || 'current time', 'data-dir': dir, click: onTimeClick, keydown: onTimeKeydown }, self.timeRange);
 
 	// current time text
 	self.currentTimeText = document.createTextNode('00:00');
