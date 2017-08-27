@@ -82,6 +82,12 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 	// player
 	const player = self.player = $('div', { class: `${prefix}-player`, role: 'region', 'aria-label': lang.player }, self.toolbar);
 
+	// fullscreen api
+	const fullscreenchange = self._fullscreenchange = 'onfullscreenchange' in player ? 'fullscreenchange' : 'onwebkitfullscreenchange' in player ? 'webkitfullscreenchange' : 'onmozfullscreenchange' in player ? 'mozfullscreenchange' : 'onMSFullscreenChange' in player ? 'MSFullscreenChange' : 'fullscreenchange';
+	const fullscreenElement = self._fullscreenElement = () => player.ownerDocument.fullscreenElement || player.ownerDocument.webkitFullscreenElement || player.ownerDocument.msFullscreenElement;
+	const requestFullscreen = self._requestFullscreen = player.requestFullscreen || player.webkitRequestFullscreen || player.mozRequestFullScreen || player.msRequestFullscreen;
+	const exitFullscreen = self._exitFullscreen = () => player.ownerDocument.exitFullscreen || player.ownerDocument.webkitCancelFullScreen || player.ownerDocument.mozCancelFullScreen || player.ownerDocument.msExitFullscreen;
+
 	// update media class and controls
 	$(media, { class: `${prefix}-media`, playsinline: '', 'webkit-playsinline': '', role: 'img' }).controls = false;
 
@@ -91,8 +97,6 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 			media.parentNode.replaceChild(player, media),
 			self.toolbar
 		);
-
-		const fullscreenchange = 'onfullscreenchange' in player ? 'fullscreenchange' : 'onwebkitfullscreenchange' in player ? 'webkitfullscreenchange' : 'onmozfullscreenchange' in player ? 'mozfullscreenchange' : 'onMSFullscreenChange' in player ? 'MSFullscreenChange' : 'fullscreenchange';
 
 		// fullscreen changes
 		player.ownerDocument.addEventListener(fullscreenchange, onFullscreenChange);
@@ -192,7 +196,9 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 	}
 
 	function onFullscreenChange() {
-		$(self.fullscreen, { 'aria-pressed': player === getFullscreenElement(player.ownerDocument) })
+		const isFullscreen = player === fullscreenElement();
+
+		$(self.fullscreen, { 'aria-pressed': isFullscreen });
 	}
 
 	/* Input Events
@@ -230,16 +236,14 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 
 	// click from fullscreen control
 	function onFullscreenClick() {
-		const document = player.ownerDocument;
-		const exitFullscreen = document.exitFullscreen || document.webkitCancelFullScreen || document.mozCancelFullScreen || document.msExitFullscreen;
-		const requestFullscreen = player.requestFullscreen || player.webkitRequestFullscreen || player.mozRequestFullScreen || player.msRequestFullscreen;
-
-		if (getFullscreenElement(document)) {
-			// exit fullscreen
-			exitFullscreen.call(document);
-		} else if (requestFullscreen) {
-			// enter fullscreen
-			requestFullscreen.call(player);
+		if (requestFullscreen) {
+			if (player === fullscreenElement()) {
+				// exit fullscreen
+				exitFullscreen().call(document);
+			} else {
+				// enter fullscreen
+				requestFullscreen.call(player);
+			}
 		} else if (media.webkitSupportsFullscreen) {
 			// iOS allows fullscreen of the video itself
 			if (media.webkitDisplayingFullscreen) {
@@ -249,6 +253,8 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 				// enter ios fullscreen
 				media.webkitEnterFullscreen();
 			}
+
+			onFullscreenChange();
 		}
 	}
 
@@ -405,8 +411,4 @@ function dispatchCustomEvent(node, type) {
 	event.initCustomEvent(type, true, true, undefined);
 
 	node.dispatchEvent(event);
-}
-
-function getFullscreenElement(document) {
-	return document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
 }
