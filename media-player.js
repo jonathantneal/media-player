@@ -303,8 +303,6 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 	});
 }
 
-MediaPlayer.$ = $;
-
 /* Handle Drag Ranges
 /* ========================================================================== */
 
