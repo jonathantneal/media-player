@@ -15,17 +15,6 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 
 	const lang = opts.lang = Object(opts.lang);
 
-	lang.player = lang.player || 'media player';
-	lang.currentTime = lang.currentTime || 'current time';
-	lang.download = lang.download || 'download';
-	lang.fullscreen = lang.fullscreen || 'fullscreen';
-	lang.minutes = lang.minutes || 'minutes';
-	lang.mute = lang.mute || 'mute';
-	lang.play = lang.play || 'play';
-	lang.remainingTime = lang.remainingTime || 'remaining time';
-	lang.seconds = lang.seconds || 'seconds';
-	lang.volume = lang.volume || 'volume';
-
 	/* Elements
 	/* ====================================================================== */
 
@@ -40,47 +29,47 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 	});
 
 	// play/pause toggle
-	self.playText = document.createTextNode(lang.play);
-	self.play = $('button', { class: `${prefix}-control ${prefix}-play`, 'aria-label': lang.play, 'aria-pressed': false, 'data-dir': dir, click: onPlayClick, keydown: onTimeKeydown }, self.playText);
+	self.playText = document.createTextNode(lang.play || 'play');
+	self.play = $('button', { class: `${prefix}-control ${prefix}-play`, 'aria-label': lang.play || 'play', 'aria-pressed': false, 'data-dir': dir, click: onPlayClick, keydown: onTimeKeydown }, self.playText);
 
 	// time slider
 	self.timeMeter = $('div', { class: `${prefix}-meter ${prefix}-time-meter` });
 	self.timeRange = $('div', { class: `${prefix}-range ${prefix}-time-range` }, self.timeMeter);
-	self.time = $('button', { class: `${prefix}-slider`, role: 'slider', 'aria-label': lang.currentTime, 'data-dir': dir, click: onTimeClick, keydown: onTimeKeydown }, self.timeRange);
+	self.time = $('button', { class: `${prefix}-slider`, role: 'slider', 'aria-label': lang.currentTime || 'current time', 'data-dir': dir, click: onTimeClick, keydown: onTimeKeydown }, self.timeRange);
 
 	// current time text
 	self.currentTimeText = document.createTextNode('00:00');
-	self.currentTime = $('span', { class: `${prefix}-text ${prefix}-current-time`, role: 'timer', 'aria-label': lang.currentTime }, self.currentTimeText);
+	self.currentTime = $('span', { class: `${prefix}-text ${prefix}-current-time`, role: 'timer', 'aria-label': lang.currentTime || 'current time' }, self.currentTimeText);
 
 	// remaining time text
 	self.remainingTimeText = document.createTextNode('00:00');
-	self.remainingTime = $('span', { class: `${prefix}-text ${prefix}-remaining-time`, role: 'timer', 'aria-label': lang.remainingTime }, self.remainingTimeText);
+	self.remainingTime = $('span', { class: `${prefix}-text ${prefix}-remaining-time`, role: 'timer', 'aria-label': lang.remainingTime || 'remaining time' }, self.remainingTimeText);
 
 	// mute/unmute toggle
-	self.muteText = document.createTextNode(lang.mute);
-	self.mute = $('button', { class: `${prefix}-control ${prefix}-mute`, 'aria-label': lang.mute, 'aria-pressed': false, 'data-dir': dir, click: onMuteClick, keydown: onVolumeKeydown }, self.muteText);
+	self.muteText = document.createTextNode(lang.mute || 'mute');
+	self.mute = $('button', { class: `${prefix}-control ${prefix}-mute`, 'aria-label': lang.mute || 'mute', 'aria-pressed': false, 'data-dir': dir, click: onMuteClick, keydown: onVolumeKeydown }, self.muteText);
 
 	// volume slider
 	self.volumeMeter = $('span', { class: `${prefix}-meter ${prefix}-volume-meter` });
 	self.volumeRange = $('span', { class: `${prefix}-range ${prefix}-volume-range` }, self.volumeMeter);
-	self.volume = $('button', { class: `${prefix}-slider ${prefix}-volume`, role: 'slider', 'aria-label': lang.volume, 'data-dir': dir, click: onVolumeClick, keydown: onVolumeKeydown }, self.volumeRange);
+	self.volume = $('button', { class: `${prefix}-slider ${prefix}-volume`, role: 'slider', 'aria-label': lang.volume || 'volume', 'data-dir': dir, click: onVolumeClick, keydown: onVolumeKeydown }, self.volumeRange);
 
 	// download link
-	self.downloadText = document.createTextNode(lang.download);
-	self.download = $('a', { class: `${prefix}-control ${prefix}-download`, href: media.src, download: media.src, 'aria-label': lang.download, 'data-dir': dir }, self.downloadText);
+	self.downloadText = document.createTextNode(lang.download || 'download');
+	self.download = $('a', { class: `${prefix}-control ${prefix}-download`, href: media.src, download: media.src, 'aria-label': lang.download || 'download', 'data-dir': dir }, self.downloadText);
 
 	// fullscreen link
-	self.fullscreenText = document.createTextNode(lang.fullscreen);
-	self.fullscreen = $('button', { class: `${prefix}-control ${prefix}-fullscreen`, 'aria-label': lang.fullscreen, 'aria-pressed': false, 'data-dir': dir, click: onFullscreenClick }, self.fullscreenText);
+	self.fullscreenText = document.createTextNode(lang.fullscreen || 'enter full screen');
+	self.fullscreen = $('button', { class: `${prefix}-control ${prefix}-fullscreen`, 'aria-label': lang.fullscreen || 'enter full screen', 'aria-pressed': false, 'data-dir': dir, click: onFullscreenClick }, self.fullscreenText);
 
 	// player toolbar
 	self.toolbar = $('div',
-		{ class: `${prefix}-toolbar`, role: 'toolbar', 'aria-label': lang.player },
+		{ class: `${prefix}-toolbar`, role: 'toolbar', 'aria-label': lang.player || 'media player' },
 		self.play, self.mute, self.currentTime, self.remainingTime, self.volume, self.time, self.download, self.fullscreen
 	);
 
 	// player
-	const player = self.player = $('div', { class: `${prefix}-player`, role: 'region', 'aria-label': lang.player }, self.toolbar);
+	const player = self.player = $('div', { class: `${prefix}-player`, role: 'region', 'aria-label': lang.player || 'media player' }, self.toolbar);
 
 	// fullscreen api
 	const fullscreenchange = self._fullscreenchange = 'onfullscreenchange' in player ? 'fullscreenchange' : 'onwebkitfullscreenchange' in player ? 'webkitfullscreenchange' : 'onmozfullscreenchange' in player ? 'mozfullscreenchange' : 'onMSFullscreenChange' in player ? 'MSFullscreenChange' : 'fullscreenchange';
@@ -138,13 +127,13 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 			if (currentTimeCode !== self.currentTimeText.nodeValue) {
 				self.currentTimeText.nodeValue = currentTimeCode;
 
-				$(self.currentTime, { title: `${timeToAural(currentTime, lang.minutes, lang.seconds)}` });
+				$(self.currentTime, { title: `${timeToAural(currentTime, lang.minutes || 'minutes', lang.seconds || 'seconds')}` });
 			}
 
 			if (remainingTimeCode !== self.remainingTimeText.nodeValue) {
 				self.remainingTimeText.nodeValue = remainingTimeCode;
 
-				$(self.remainingTime, { title: `${timeToAural(duration - currentTime, lang.minutes, lang.seconds)}` });
+				$(self.remainingTime, { title: `${timeToAural(duration - currentTime, lang.minutes || 'minutes', lang.seconds || 'seconds')}` });
 			}
 
 			$(self.time, { 'aria-valuenow': currentTime, 'aria-valuemin': 0, 'aria-valuemax': duration });
