@@ -6,9 +6,9 @@
 	--player-meter-color: #0088dd;
 
 	--player-unset-touch-actions-styles: {
-		-webkit-tap-highlight-color: transparent; // stylelint-disable-line property-no-vendor-prefix
-		-webkit-touch-callout: none; // stylelint-disable-line property-no-vendor-prefix
-		-webkit-user-select: none; // stylelint-disable-line property-no-vendor-prefix
+		-webkit-tap-highlight-color: transparent; /* stylelint-disable-line property-no-vendor-prefix */
+		-webkit-touch-callout: none; /* stylelint-disable-line property-no-vendor-prefix */
+		-webkit-user-select: none; /* stylelint-disable-line property-no-vendor-prefix */
 	};
 
 	--player-unset-button-styles: {
@@ -46,7 +46,7 @@
 		padding: 1.16667em;
 		text-decoration: none;
 
-		&:matches(:hover, :focus, [aria-pressed="true"]) {
+		&:matches(:hover, :focus) {
 			background-color: var(--player-enter-color);
 		}
 
@@ -78,7 +78,7 @@
 		background-color: var(--player-meter-color);
 		display: block;
 		overflow: hidden;
-		size: 0 1em;
+		size: 100%;
 	};
 
 	--player-text-styles: {
