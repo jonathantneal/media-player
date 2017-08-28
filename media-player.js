@@ -26,8 +26,8 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 	});
 
 	// play/pause toggle
-	self.playSymbol = svg(prefix, svgs, 'play', 'play');
-	self.pauseSymbol = svg(prefix, svgs, 'pause', 'pause');
+	self.playSymbol = svg(prefix, svgs, 'play');
+	self.pauseSymbol = svg(prefix, svgs, 'pause');
 	self.play = $('button', { class: `${prefix}-control ${prefix}-play`, 'data-dir': dir, click: onPlayClick, keydown: onTimeKeydown }, self.playSymbol, self.pauseSymbol);
 
 	// time slider
@@ -44,8 +44,8 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 	self.remainingTime = $('span', { class: `${prefix}-text ${prefix}-remaining-time`, role: 'timer', 'aria-label': lang.remainingTime || 'remaining time' }, self.remainingTimeText);
 
 	// mute/unmute toggle
-	self.muteSymbol = svg(prefix, svgs, 'mute', lang.mute || 'mute');
-	self.unmuteSymbol = svg(prefix, svgs, 'unmute', lang.unmute || 'unmute');
+	self.muteSymbol = svg(prefix, svgs, 'mute');
+	self.unmuteSymbol = svg(prefix, svgs, 'unmute');
 	self.mute = $('button', { class: `${prefix}-control ${prefix}-mute`, 'data-dir': dir, click: onMuteClick, keydown: onVolumeKeydown }, self.muteSymbol, self.unmuteSymbol);
 
 	// volume slider
@@ -54,12 +54,12 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 	self.volume = $('button', { class: `${prefix}-slider ${prefix}-volume`, role: 'slider', 'aria-label': lang.volume || 'volume', 'data-dir': dir, click: onVolumeClick, keydown: onVolumeKeydown }, self.volumeRange);
 
 	// download link
-	self.downloadLink = svg(prefix, svgs, 'download', lang.download || 'download');
-	self.download = $('a', { class: `${prefix}-control ${prefix}-download`, href: media.src, download: media.src, 'data-dir': dir }, self.downloadLink);
+	self.downloadLink = svg(prefix, svgs, 'download');
+	self.download = $('button', { class: `${prefix}-control ${prefix}-download`, 'aria-label': lang.download || 'download', 'data-dir': dir }, self.downloadLink);
 
 	// fullscreen link
-	self.enterFullscreenSymbol = svg(prefix, svgs, 'enterFullscreen', lang.enterFullscreen || 'enter full screen');
-	self.leaveFullscreenSymbol = svg(prefix, svgs, 'leaveFullscreen', lang.leaveFullscreen || 'leave full screen');
+	self.enterFullscreenSymbol = svg(prefix, svgs, 'enterFullscreen');
+	self.leaveFullscreenSymbol = svg(prefix, svgs, 'leaveFullscreen');
 	self.fullscreen = $('button', { class: `${prefix}-control ${prefix}-fullscreen`, 'data-dir': dir, click: onFullscreenClick }, self.enterFullscreenSymbol, self.leaveFullscreenSymbol);
 
 	// player toolbar
@@ -103,6 +103,7 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 
 			$(self.playSymbol, { 'aria-hidden': !paused });
 			$(self.pauseSymbol, { 'aria-hidden': paused });
+			$(self.play, { 'aria-label': paused ? lang.play || 'play' : lang.pause || 'pause' });
 
 			clearInterval(interval);
 
@@ -187,6 +188,7 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 
 		self.volumeMeter.style[axisProp] = `${volumePercentage * 100}%`;
 
+		$(self.mute, { 'aria-label': isMuted ? lang.unmute || 'unmute' : lang.mute || 'mute' });
 		$(self.muteSymbol, { 'aria-hidden': isMuted });
 		$(self.unmuteSymbol, { 'aria-hidden': !isMuted });
 	}
@@ -194,6 +196,7 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 	function onFullscreenChange() {
 		const isFullscreen = player === fullscreenElement();
 
+		$(self.fullscreen, { 'aria-label': isFullscreen ? lang.leaveFullscreen || 'leave full screen' : lang.enterFullscreen || 'enter full screen' });
 		$(self.enterFullscreenSymbol, { 'aria-hidden': isFullscreen });
 		$(self.leaveFullscreenSymbol, { 'aria-hidden': !isFullscreen });
 	}
@@ -399,7 +402,7 @@ function $(rawid) {
 	return id;
 }
 
-function svg(prefix, svgs, type, label) { // eslint-disable-line max-params
+function svg(prefix, svgs, type) { // eslint-disable-line max-params
 	const svgns = 'http://www.w3.org/2000/svg';
 	const use = document.createElementNS(svgns, 'use');
 
@@ -407,7 +410,7 @@ function svg(prefix, svgs, type, label) { // eslint-disable-line max-params
 
 	return $(document.createElementNS(svgns, 'svg'), {
 		class: `${prefix}-symbol ${prefix}-${type}-symbol`,
-		title: label
+		role: 'presentation'
 	}, use);
 }
 
