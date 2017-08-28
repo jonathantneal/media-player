@@ -83,7 +83,7 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 	document.addEventListener(fullscreenchange, onFullscreenChange);
 
 	// update media class and controls
-	$(media, { class: `${prefix}-media`, playsinline: '', 'webkit-playsinline': '', role: 'img' }).controls = false;
+	$(media, { class: `${prefix}-media`, playsinline: '', 'webkit-playsinline': '', role: 'img', tabindex: -1 }).controls = false;
 
 	// replace the media element with the media player
 	if (media.parentNode) {
