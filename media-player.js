@@ -114,6 +114,7 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 				interval = setInterval(onTimeChange, 34);
 			}
 
+			// dispatch new "playchange" event
 			dispatchCustomEvent(media, 'playchange');
 		}
 	}
@@ -147,6 +148,7 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 
 			self.timeMeter.style[axisProp] = `${currentTimePercentage * 100}%`;
 
+			// dispatch new "timechange" event
 			dispatchCustomEvent(media, 'timechange');
 		}
 	}
@@ -171,6 +173,7 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 	function onCanPlayOnce() {
 		media.removeEventListener('canplaythrough', onCanPlayOnce);
 
+		// dispatch new "canplayonce" event
 		dispatchCustomEvent(media, 'canplayonce');
 
 		if (!paused || media.autoplay) {
