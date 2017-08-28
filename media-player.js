@@ -15,6 +15,8 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 	/* Elements
 	/* ====================================================================== */
 
+	const document = media.ownerDocument;
+
 	self.media = $(media, {
 		canplaythrough: onCanPlayOnce,
 		loadstart: onLoadStart,
@@ -73,9 +75,12 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 
 	// fullscreen api
 	const fullscreenchange = self._fullscreenchange = 'onfullscreenchange' in player ? 'fullscreenchange' : 'onwebkitfullscreenchange' in player ? 'webkitfullscreenchange' : 'onmozfullscreenchange' in player ? 'mozfullscreenchange' : 'onMSFullscreenChange' in player ? 'MSFullscreenChange' : 'fullscreenchange';
-	const fullscreenElement = self._fullscreenElement = () => player.ownerDocument.fullscreenElement || player.ownerDocument.webkitFullscreenElement || player.ownerDocument.msFullscreenElement;
+	const fullscreenElement = self._fullscreenElement = () => document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
 	const requestFullscreen = self._requestFullscreen = player.requestFullscreen || player.webkitRequestFullscreen || player.mozRequestFullScreen || player.msRequestFullscreen;
-	const exitFullscreen = self._exitFullscreen = () => player.ownerDocument.exitFullscreen || player.ownerDocument.webkitCancelFullScreen || player.ownerDocument.mozCancelFullScreen || player.ownerDocument.msExitFullscreen;
+	const exitFullscreen = self._exitFullscreen = () => document.exitFullscreen || document.webkitCancelFullScreen || document.mozCancelFullScreen || document.msExitFullscreen;
+
+	// listen for fullscreen changes
+	document.addEventListener(fullscreenchange, onFullscreenChange);
 
 	// update media class and controls
 	$(media, { class: `${prefix}-media`, playsinline: '', 'webkit-playsinline': '', role: 'img' }).controls = false;
@@ -86,9 +91,6 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 			media.parentNode.replaceChild(player, media),
 			self.toolbar
 		);
-
-		// fullscreen changes
-		player.ownerDocument.addEventListener(fullscreenchange, onFullscreenChange);
 	}
 
 	/* Interval Events
