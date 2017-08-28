@@ -35,7 +35,7 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 	// time slider
 	self.timeMeter = $('span', { class: `${prefix}-meter ${prefix}-time-meter` });
 	self.timeRange = $('span', { class: `${prefix}-range ${prefix}-time-range` }, self.timeMeter);
-	self.time = $('button', { class: `${prefix}-slider ${prefix}-time`, role: 'slider', 'aria-label': lang.currentTime || 'current time', 'data-dir': dir, click: onTimeClick, keydown: onTimeKeydown }, self.timeRange);
+	self.time = $('button', { class: `${prefix}-slider ${prefix}-time`, role: 'slider', 'aria-label': lang.currentTime || 'current time', 'data-dir': opts.timeDir || dir, click: onTimeClick, keydown: onTimeKeydown }, self.timeRange);
 
 	// current time text
 	self.currentTimeText = document.createTextNode('');
@@ -53,7 +53,7 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 	// volume slider
 	self.volumeMeter = $('span', { class: `${prefix}-meter ${prefix}-volume-meter` });
 	self.volumeRange = $('span', { class: `${prefix}-range ${prefix}-volume-range` }, self.volumeMeter);
-	self.volume = $('button', { class: `${prefix}-slider ${prefix}-volume`, role: 'slider', 'aria-label': lang.volume || 'volume', 'data-dir': dir, click: onVolumeClick, keydown: onVolumeKeydown }, self.volumeRange);
+	self.volume = $('button', { class: `${prefix}-slider ${prefix}-volume`, role: 'slider', 'aria-label': lang.volume || 'volume', 'data-dir': opts.volumeDir || dir, click: onVolumeClick, keydown: onVolumeKeydown }, self.volumeRange);
 
 	// download link
 	self.downloadLink = svg(prefix, svgs, 'download');
