@@ -246,7 +246,7 @@ loading SVGs from an external URL.
 
 ---
 
-[Media Player] compiles as 2.5 kB of JS and 615 B of CSS (gzipped).
+[Media Player] compiles as 2.52 kB of JS and 604 B of CSS (gzipped).
 
 [Media Player]: https://github.com/jonathantneal/media-player
 

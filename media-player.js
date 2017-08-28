@@ -103,9 +103,9 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 		if (paused !== media.paused) {
 			paused = media.paused;
 
+			$(self.play, { 'aria-label': paused ? lang.play || 'play' : lang.pause || 'pause' });
 			$(self.playSymbol, { 'aria-hidden': !paused });
 			$(self.pauseSymbol, { 'aria-hidden': paused });
-			$(self.play, { 'aria-label': paused ? lang.play || 'play' : lang.pause || 'pause' });
 
 			clearInterval(interval);
 
