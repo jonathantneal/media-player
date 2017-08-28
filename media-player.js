@@ -245,6 +245,14 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 			} else {
 				// enter fullscreen
 				requestFullscreen.call(player);
+
+				// maintain focus in internet explorer
+				self.fullscreen.focus();
+
+				// maintain focus in safari
+				setTimeout(() => {
+					self.fullscreen.focus();
+				}, 200);
 			}
 		} else if (media.webkitSupportsFullscreen) {
 			// iOS allows fullscreen of the video itself
