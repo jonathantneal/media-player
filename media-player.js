@@ -18,7 +18,7 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 	const document = media.ownerDocument;
 
 	self.media = $(media, {
-		canplaythrough: onCanPlayOnce,
+		canplaythrough: onCanPlayStart,
 		loadstart: onLoadStart,
 		loadeddata: onLoadedData,
 		pause: onPlayChange,
@@ -153,8 +153,11 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 		}
 	}
 
+	// when media loads for the first time
 	function onLoadStart() {
-		$(media, { canplaythrough: onCanPlayOnce });
+		media.removeEventListener('canplaythrough', onCanPlayStart);
+
+		$(media, { canplaythrough: onCanPlayStart });
 
 		$(self.download, { href: media.src, download: media.src });
 
@@ -170,11 +173,11 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 	}
 
 	// when the media can play
-	function onCanPlayOnce() {
-		media.removeEventListener('canplaythrough', onCanPlayOnce);
+	function onCanPlayStart() {
+		media.removeEventListener('canplaythrough', onCanPlayStart);
 
-		// dispatch new "canplayonce" event
-		dispatchCustomEvent(media, 'canplayonce');
+		// dispatch new "canplaystart" event
+		dispatchCustomEvent(media, 'canplaystart');
 
 		if (!paused || media.autoplay) {
 			media.play();
