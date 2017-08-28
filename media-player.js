@@ -307,14 +307,14 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 	}
 
 	// pointer events from time control
-	onDrag(self.time, (percentage) => {
+	onDrag(self.time, self.timeRange, (percentage) => {
 		media.currentTime = duration * Math.max(0, Math.min(1, percentage));
 
 		onTimeChange();
 	});
 
 	// pointer events from volume control
-	onDrag(self.volume, (percentage) => {
+	onDrag(self.volume, self.volumeRange, (percentage) => {
 		media.volume = Math.max(0, Math.min(1, percentage));
 	});
 
@@ -324,7 +324,7 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 /* Handle Drag Ranges
 /* ========================================================================== */
 
-function onDrag(target, listener) {
+function onDrag(target, innerTarget, listener) {
 	const hasPointerEvent = undefined !== target.onpointerup;
 	const hasTouchEvent   = undefined !== target.ontouchstart;
 	const pointerDown = hasPointerEvent ? 'pointerdown' : hasTouchEvent ? 'touchstart' : 'mousedown';
@@ -341,7 +341,7 @@ function onDrag(target, listener) {
 		window = target.ownerDocument.defaultView;
 
 		// client boundaries
-		rect = target.getBoundingClientRect();
+		rect = innerTarget.getBoundingClientRect();
 
 		// drag direction
 		dir = target.getAttribute('data-dir') || 'ltr';
