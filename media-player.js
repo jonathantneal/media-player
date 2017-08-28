@@ -57,7 +57,7 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 
 	// download link
 	self.downloadLink = svg(prefix, svgs, 'download');
-	self.download = $('button', { class: `${prefix}-control ${prefix}-download`, 'aria-label': lang.download || 'download', 'data-dir': dir }, self.downloadLink);
+	self.download = $('button', { class: `${prefix}-control ${prefix}-download`, 'aria-label': lang.download || 'download', 'data-dir': dir, click: onDownloadClick }, self.downloadLink);
 
 	// fullscreen link
 	self.enterFullscreenSymbol = svg(prefix, svgs, 'enterFullscreen');
@@ -240,6 +240,15 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 		if (!event.pointerType && !event.detail) {
 			onMuteClick(event);
 		}
+	}
+
+	// click from download control
+	function onDownloadClick() {
+		const a = document.head.appendChild($('a', { download: '', href: media.src }));
+
+		a.click();
+
+		document.head.removeChild(a);
 	}
 
 	// click from fullscreen control
