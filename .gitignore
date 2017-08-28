@@ -1,7 +1,7 @@
 dist
 node_modules
 .*
-!.appveyor.yml
+!.*.config.js
 !.gitignore
 !.travis.yml
 *.log*
