@@ -8,9 +8,11 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 	const self = this;
 	const opts = Object(rawopts);
 	const prefix = opts.prefix || 'media';
-	const dir  = /^(btt|ltr|rtl|ttb)$/i.test(opts.dir) ? String(opts.dir).toLowerCase() : getComputedStyle(media).direction;
 	const lang = Object(opts.lang);
 	const svgs = Object(opts.svgs);
+
+	const timeDir = opts.timeDir || 'ltr';
+	const volumeDir = opts.volumeDir || 'ltr';
 
 	/* Elements
 	/* ====================================================================== */
@@ -30,12 +32,12 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 	// play/pause toggle
 	self.playSymbol = svg(prefix, svgs, 'play');
 	self.pauseSymbol = svg(prefix, svgs, 'pause');
-	self.play = $('button', { class: `${prefix}-control ${prefix}-play`, 'data-dir': dir, click: onPlayClick, keydown: onTimeKeydown }, self.playSymbol, self.pauseSymbol);
+	self.play = $('button', { class: `${prefix}-control ${prefix}-play`, click: onPlayClick, keydown: onTimeKeydown }, self.playSymbol, self.pauseSymbol);
 
 	// time slider
 	self.timeMeter = $('span', { class: `${prefix}-meter ${prefix}-time-meter` });
 	self.timeRange = $('span', { class: `${prefix}-range ${prefix}-time-range` }, self.timeMeter);
-	self.time = $('button', { class: `${prefix}-slider ${prefix}-time`, role: 'slider', 'aria-label': lang.currentTime || 'current time', 'data-dir': opts.timeDir || dir, click: onTimeClick, keydown: onTimeKeydown }, self.timeRange);
+	self.time = $('button', { class: `${prefix}-slider ${prefix}-time`, role: 'slider', 'aria-label': lang.currentTime || 'current time', 'data-dir': timeDir, click: onTimeClick, keydown: onTimeKeydown }, self.timeRange);
 
 	// current time text
 	self.currentTimeText = document.createTextNode('');
@@ -48,21 +50,21 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 	// mute/unmute toggle
 	self.muteSymbol = svg(prefix, svgs, 'mute');
 	self.unmuteSymbol = svg(prefix, svgs, 'unmute');
-	self.mute = $('button', { class: `${prefix}-control ${prefix}-mute`, 'data-dir': dir, click: onMuteClick, keydown: onVolumeKeydown }, self.muteSymbol, self.unmuteSymbol);
+	self.mute = $('button', { class: `${prefix}-control ${prefix}-mute`, click: onMuteClick, keydown: onVolumeKeydown }, self.muteSymbol, self.unmuteSymbol);
 
 	// volume slider
 	self.volumeMeter = $('span', { class: `${prefix}-meter ${prefix}-volume-meter` });
 	self.volumeRange = $('span', { class: `${prefix}-range ${prefix}-volume-range` }, self.volumeMeter);
-	self.volume = $('button', { class: `${prefix}-slider ${prefix}-volume`, role: 'slider', 'aria-label': lang.volume || 'volume', 'data-dir': opts.volumeDir || dir, click: onVolumeClick, keydown: onVolumeKeydown }, self.volumeRange);
+	self.volume = $('button', { class: `${prefix}-slider ${prefix}-volume`, role: 'slider', 'aria-label': lang.volume || 'volume', 'data-dir': volumeDir, click: onVolumeClick, keydown: onVolumeKeydown }, self.volumeRange);
 
 	// download link
 	self.downloadLink = svg(prefix, svgs, 'download');
-	self.download = $('button', { class: `${prefix}-control ${prefix}-download`, 'aria-label': lang.download || 'download', 'data-dir': dir, click: onDownloadClick }, self.downloadLink);
+	self.download = $('button', { class: `${prefix}-control ${prefix}-download`, 'aria-label': lang.download || 'download', click: onDownloadClick }, self.downloadLink);
 
 	// fullscreen link
 	self.enterFullscreenSymbol = svg(prefix, svgs, 'enterFullscreen');
 	self.leaveFullscreenSymbol = svg(prefix, svgs, 'leaveFullscreen');
-	self.fullscreen = $('button', { class: `${prefix}-control ${prefix}-fullscreen`, 'data-dir': dir, click: onFullscreenClick }, self.enterFullscreenSymbol, self.leaveFullscreenSymbol);
+	self.fullscreen = $('button', { class: `${prefix}-control ${prefix}-fullscreen`, click: onFullscreenClick }, self.enterFullscreenSymbol, self.leaveFullscreenSymbol);
 
 	// player toolbar
 	self.toolbar = $('div',
@@ -143,7 +145,7 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 
 			$(self.time, { 'aria-valuenow': currentTime, 'aria-valuemin': 0, 'aria-valuemax': duration });
 
-			const dirIsInline = /^(ltr|rtl)$/i.test(self.time.getAttribute('data-dir'));
+			const dirIsInline = /^(ltr|rtl)$/i.test(timeDir);
 			const axisProp = dirIsInline ? 'width' : 'height';
 
 			self.timeMeter.style[axisProp] = `${currentTimePercentage * 100}%`;
@@ -191,7 +193,7 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 
 		$(self.volume, { 'aria-valuenow': volumePercentage, 'aria-valuemin': 0, 'aria-valuemax': 1 });
 
-		const dirIsInline = /^(ltr|rtl)$/i.test(self.volume.getAttribute('data-dir'));
+		const dirIsInline = /^(ltr|rtl)$/i.test(volumeDir);
 		const axisProp = dirIsInline ? 'width' : 'height';
 
 		self.volumeMeter.style[axisProp] = `${volumePercentage * 100}%`;
@@ -287,11 +289,11 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 	function onTimeKeydown(event) {
 		const { keyCode, shiftKey } = event;
 
-		// 37: LEFT, 38 is UP, 39: RIGHT, 40: DOWN
+		// 37: LEFT, 38: UP, 39: RIGHT, 40: DOWN
 		if (37 <= keyCode && 40 >= keyCode) {
 			event.preventDefault();
 
-			const isLTR = 'ltr' === getComputedStyle(self.time).direction;
+			const isLTR = /^(btt|ltr)$/.tests(timeDir);
 			const offset = 37 === keyCode || 39 === keyCode ? keyCode - 38 : keyCode - 39;
 
 			media.currentTime = Math.max(0, Math.min(duration, currentTime + offset * (isLTR ? 1 : -1) * (shiftKey ? 10 : 1)));
@@ -304,11 +306,11 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 	function onVolumeKeydown(event) {
 		const { keyCode, shiftKey } = event;
 
-		// 37: LEFT, 38 is UP, 39: RIGHT, 40: DOWN
+		// 37: LEFT, 38: UP, 39: RIGHT, 40: DOWN
 		if (37 <= keyCode && 40 >= keyCode) {
 			event.preventDefault();
 
-			const isLTR = 'ltr' === getComputedStyle(self.time).direction;
+			const isLTR = /^(btt|ltr)$/.tests(volumeDir);
 			const offset = 37 === keyCode || 39 === keyCode ? keyCode - 38 : isLTR ? 39 - keyCode : keyCode - 39;
 
 			media.volume = Math.max(0, Math.min(1, media.volume + offset * (isLTR ? 0.1 : -0.1) * (shiftKey ? 1 : 0.2)));
@@ -316,14 +318,14 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 	}
 
 	// pointer events from time control
-	onDrag(self.time, self.timeRange, (percentage) => {
+	onDrag(self.time, self.timeRange, timeDir, (percentage) => {
 		media.currentTime = duration * Math.max(0, Math.min(1, percentage));
 
 		onTimeChange();
 	});
 
 	// pointer events from volume control
-	onDrag(self.volume, self.volumeRange, (percentage) => {
+	onDrag(self.volume, self.volumeRange, volumeDir, (percentage) => {
 		media.volume = Math.max(0, Math.min(1, percentage));
 	});
 
@@ -333,14 +335,21 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 /* Handle Drag Ranges
 /* ========================================================================== */
 
-function onDrag(target, innerTarget, listener) {
+function onDrag(target, innerTarget, dir, listener) { // eslint-disable-line max-params
 	const hasPointerEvent = undefined !== target.onpointerup;
 	const hasTouchEvent   = undefined !== target.ontouchstart;
 	const pointerDown = hasPointerEvent ? 'pointerdown' : hasTouchEvent ? 'touchstart' : 'mousedown';
 	const pointerMove = hasPointerEvent ? 'pointermove' : hasTouchEvent ? 'touchmove' : 'mousemove';
 	const pointerUp   = hasPointerEvent ? 'pointerup'   : hasTouchEvent ? 'touchend' : 'mouseup';
 
-	let window, rect, dir, dirIsInline, dirIsStart;
+	// ...
+	const dirIsInline = /^(ltr|rtl)$/i.test(dir);
+	const dirIsStart  = /^(ltr|ttb)$/i.test(dir);
+
+	// ...
+	const axisProp = dirIsInline ? 'clientX' : 'clientY';
+
+	let window, start, end;
 
 	// on pointer down
 	target.addEventListener(pointerDown, onpointerdown);
@@ -350,13 +359,11 @@ function onDrag(target, innerTarget, listener) {
 		window = target.ownerDocument.defaultView;
 
 		// client boundaries
-		rect = innerTarget.getBoundingClientRect();
+		const rect = innerTarget.getBoundingClientRect();
 
-		// drag direction
-		dir = target.getAttribute('data-dir') || 'ltr';
-
-		dirIsInline = /^(ltr|rtl)$/i.test(dir);
-		dirIsStart  = /^(ltr|ttb)$/i.test(dir);
+		// the container start and end coordinates
+		start = dirIsInline ? rect.left : rect.top;
+		end   = dirIsInline ? rect.right : rect.bottom;
 
 		onpointermove(event);
 
@@ -369,12 +376,7 @@ function onDrag(target, innerTarget, listener) {
 		event.preventDefault();
 
 		// the pointer coordinate
-		const axisProp = dirIsInline ? 'clientX' : 'clientY';
 		const position = axisProp in event ? event[axisProp] : event.touches && event.touches[0] && event.touches[0][axisProp] || 0;
-
-		// the container start and end coordinates
-		const start = dirIsInline ? rect.left : rect.top;
-		const end   = dirIsInline ? rect.right : rect.bottom;
 
 		// the percentage of the pointer along the container
 		const percentage = (dirIsStart ? position - start : end - position) / (end - start);

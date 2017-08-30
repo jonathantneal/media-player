@@ -24,6 +24,7 @@
 	--player-toolbar-styles: {
 		align-items: center;
 		cursor: default;
+		direction: ltr;
 		display: flex;
 		flex-wrap: wrap;
 
@@ -48,10 +49,6 @@
 
 		&:matches(:hover, :focus) {
 			background-color: var(--player-enter-color);
-		}
-
-		&:dir(rtl) {
-			transform: scaleX(-1);
 		}
 	};
 
