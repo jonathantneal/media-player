@@ -72,7 +72,8 @@ const player = new MediaPlayer(
       leaveFullscreen: '#symbol-leaveFullscreen',
       download: '#symbol-download'
     },
-    dir: : 'ltr'
+    timeDir: 'ltr',
+    volumeDir: 'ltr'
   }
 );
 ```
@@ -127,9 +128,7 @@ The `lang` object is used to provide accessible labels to each control in any
 language. Undefined labels will use English labels.
 
 The `svgs`
-object is used to assign an SVG sprite to each control. The `dir` string is
-used to determine the text-flow of the component, and both left-to-right
-(`ltr`) and right-to-left (`rtl`) modes are supported.
+object is used to assign an SVG sprite to each control.
 
 ## Media Player Instance
 
@@ -166,8 +165,8 @@ new Media(mediaElement, options);
 
 Volume and time controls sliders allow you to drag volume up or down and time
 backward or forward. By default, these sliders work left-to-right, meaning that
-dragging the slider to the right advances the control. When the component
-detects a right-to-left environment, this automatically flips.
+dragging the slider to the right advances the control. This behavior is
+expected in a right-to-left environment as well.
 
 These control can be configured to work in any direction — right-to-left
 (`rtl`), top-to-bottom (`ttb`), bottom-to-top (`btt`) — with the following
