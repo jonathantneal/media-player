@@ -1,14 +1,14 @@
 # Contributing to Media Player
 
-You want to help? You rock! Now, take a moment to be sure your contributions
-make sense to everyone else.
+You want to help? You rock! But please, take a moment to be sure your
+contributions make sense to everyone else.
 
 ## Reporting Issues
 
 Found a problem? Want a new feature?
 
-- See if your issue or idea has [already been reported].
-- Provide a [reduced test case] or a [live example].
+- Please, see if your issue or idea has [already been reported].
+- Please, provide a [reduced test case] or a [live example].
 
 Remember, a bug is a _demonstrable problem_ caused by _our_ code.
 
@@ -17,19 +17,28 @@ Remember, a bug is a _demonstrable problem_ caused by _our_ code.
 Pull requests are the greatest contributions, so be sure they are focused in
 scope and avoid unrelated commits.
 
-1. To begin; [fork this project], clone your fork, and add our upstream.
+1. To begin; [fork this project] and then clone your fork locally
    ```bash
-   # Clone your fork of the repo into the current directory
+   # Clone your fork of this project
    git clone git@github.com:YOUR_USER/media-player.git
 
-   # Navigate to the newly cloned directory
+   # Navigate to your fork of this project
    cd media-player
+
+   # Install the tools necessary for testing this project
+   npm install
 
    # Assign the original repo to a remote called "upstream"
    git remote add upstream git@github.com:jonathantneal/media-player.git
 
-   # Install the tools necessary for testing
-   npm install
+   # Clone your fork of the gh-pages branch / directory
+   git clone --branch gh-pages git@github.com:YOUR_USER/media-player.git gh-pages
+
+   # Navigate to your fork of the gh-pages branch
+   cd gh-pages
+
+   # Assign the original branch to a remote called "upstream"
+   git remote add upstream git@github.com:jonathantneal/media-player.git
    ```
 
 2. Create a branch for your feature or fix:
