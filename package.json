@@ -20,14 +20,14 @@
   "scripts": {
     "clean": "git clean -X -d -f",
     "prepublish": "npm run test && npm run start:publish",
-    "start": "concurrently --kill-others-on-fail 'npm run start:js' 'npm run start:css' 'npm run start:http'",
+    "start": "concurrently --kill-others-on-fail \"npm run start:js\" \"npm run start:css\" \"npm run start:http\"",
     "start:css": "postcss media-player.css --watch --config .postcss.config.js --map true --compress --output dist/media-player.css",
     "start:http": "http-server dist",
     "start:js": "rollup media-player.js --watch --config .rollup.config.js --sourcemap --compress --output.format iife --output.file dist/media-player.js",
     "start:publish": "npm run start:publish:js && npm run start:publish:css",
     "start:publish:css": "postcss --config .postcss.config.js media-player.css --map true --output media-player.dist.css",
     "start:publish:js": "rollup --config .rollup.config.js --output.format cjs --sourcemap media-player.dist.map.js --output.file media-player.dist.js",
-    "test": "echo 'Running tests...'; npm run test:css && npm run test:js",
+    "test": "echo \"Running tests...\"; concurrently --kill-others-on-fail \"npm run test:css\" \"npm run test:js\"",
     "test:css": "stylelint media-player.css",
     "test:js": "eslint media-player.js --cache"
   },
