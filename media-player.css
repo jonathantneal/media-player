@@ -1,15 +1,14 @@
 :root {
-	--player-back-color: #ffffff;
-	--player-fill-color: #000000;
-	--player-back-enter-color: color(#9999ff a(25%));
-	--player-fill-enter-color: #0066bb;
+	--player-enter-color: color(#9999ff a(25%));
+	--player-back-fullscreen-color: color(#000000 a(75%));
+	--player-fill-fullscreen-color: #ffffff;
 	--player-range-color: #cccccc;
 	--player-meter-color: #0088dd;
 
 	--player-unset-touch-actions-styles: {
-		-webkit-tap-highlight-color: transparent; // stylelint-disable-line property-no-vendor-prefix
-		-webkit-touch-callout: none; // stylelint-disable-line property-no-vendor-prefix
-		-webkit-user-select: none; // stylelint-disable-line property-no-vendor-prefix
+		-webkit-tap-highlight-color: transparent; /* stylelint-disable-line property-no-vendor-prefix */
+		-webkit-touch-callout: none; /* stylelint-disable-line property-no-vendor-prefix */
+		-webkit-user-select: none; /* stylelint-disable-line property-no-vendor-prefix */
 	};
 
 	--player-unset-button-styles: {
@@ -25,8 +24,18 @@
 	--player-toolbar-styles: {
 		align-items: center;
 		cursor: default;
+		direction: ltr;
 		display: flex;
 		flex-wrap: wrap;
+
+		@nest :fullscreen & {
+			background-color: var(--player-back-fullscreen-color);
+			color: var(--player-fill-fullscreen-color);
+			inset-block-end: 0;
+			inset-inline: 0;
+			opacity: .8;
+			position: absolute;
+		}
 	};
 
 	--player-control-styles: {
@@ -38,13 +47,8 @@
 		padding: 1.16667em;
 		text-decoration: none;
 
-		&:matches(:hover, :focus, [aria-pressed="true"]) {
-			color: var(--player-fill-enter-color);
-		}
-
-		&:focus {
-			background-color: var(--player-back-enter-color);
-			outline-width: 0;
+		&:matches(:hover, :focus) {
+			background-color: var(--player-enter-color);
 		}
 	};
 
@@ -56,8 +60,7 @@
 		padding: .625em .5em;
 
 		&:focus {
-			background-color: var(--player-back-enter-color);
-			outline-width: 0;
+			background-color: var(--player-enter-color);
 		}
 	};
 
@@ -72,13 +75,24 @@
 		background-color: var(--player-meter-color);
 		display: block;
 		overflow: hidden;
-		size: 0 1em;
+		size: 100%;
 	};
 
 	--player-text-styles: {
 		font-size: 75%;
 		padding-inline: .5em;
 		width: 2.5em;
+	};
+
+	--player-symbol-styles: {
+		display: block;
+		fill: currentColor;
+		height: 1em;
+		width: 1em;
+
+		&:matches([aria-hidden="true"]) {
+			display: none;
+		}
 	};
 }
 
@@ -125,4 +139,8 @@
 
 .media-control {
 	@apply --player-control-styles;
+}
+
+.media-symbol {
+	@apply --player-symbol-styles;
 }

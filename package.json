@@ -1,28 +1,35 @@
 {
   "name": "mediaplayer",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "A tiny, responsive, international, accessible, easily customizable media player",
   "author": "Jonathan Neal <jonathantneal@hotmail.com>",
   "license": "CC0-1.0",
   "repository": "jonathantneal/media-player",
   "homepage": "https://github.com/jonathantneal/media-player#readme",
   "bugs": "https://github.com/jonathantneal/media-player/issues",
-  "main": "media-player.cjs.js",
   "module": "media-player.js",
-  "style": "media-player.css",
+  "modulecss": "media-player.css",
+  "main": "media-player.dist.js",
+  "maincss": "media-player.dist.css",
   "files": [
     "media-player.js",
-    "media-player.cjs.js",
-    "media-player.css"
+    "media-player.dist.js",
+    "media-player.css",
+    "media-player.dist.css"
   ],
   "scripts": {
-    "build": "babel media-player.js --out-file media-player.cjs.js",
     "clean": "git clean -X -d -f",
-    "prepublish": "npm run test && npm run build",
-    "start": "gulp --cwd . --gulpfile node_modules/gulp-config-dev",
-    "test": "echo 'Running tests...'; npm run test:css && npm run test:js",
-    "test:css": "stylelint --syntax scss *.css",
-    "test:js": "eslint media-player.js placeholders/*.js --cache --ignore-pattern .gitignore"
+    "prepublish": "npm run test && npm run start:publish",
+    "start": "concurrently --kill-others-on-fail \"npm run start:js\" \"npm run start:css\" \"npm run start:http\"",
+    "start:css": "postcss media-player.css --watch --config .postcss.config.js --map true --compress --output dist/media-player.css",
+    "start:http": "http-server dist",
+    "start:js": "rollup media-player.js --watch --config .rollup.config.js --sourcemap --compress --output.format iife --output.file dist/media-player.js",
+    "start:publish": "npm run start:publish:js && npm run start:publish:css",
+    "start:publish:css": "postcss --config .postcss.config.js media-player.css --map true --output media-player.dist.css",
+    "start:publish:js": "rollup --config .rollup.config.js --output.format cjs --sourcemap media-player.dist.map.js --output.file media-player.dist.js",
+    "test": "echo \"Running tests...\"; concurrently --kill-others-on-fail \"npm run test:css\" \"npm run test:js\"",
+    "test:css": "stylelint media-player.css",
+    "test:js": "eslint media-player.js --cache"
   },
   "engines": {
     "node": ">=4.0.0"
@@ -37,38 +44,34 @@
     "last 2 safari versions"
   ],
   "devDependencies": {
-    "babel-cli": "^6.26.0",
+    "autoprefixer": "^7.1.3",
+    "babel-core": "^6.26.0",
+    "babel-plugin-external-helpers": "^6.22.0",
     "babel-preset-env": "^1.6.0",
+    "concurrently": "^3.5.0",
+    "cssnano": "^3.10.0",
     "eslint": "^4.5.0",
     "eslint-config-dev": "^2.0.0",
-    "gulp-config-dev": "^3.13.1",
+    "http-server": "^0.10.0",
+    "postcss-apply": "^0.8.0",
+    "postcss-calc": "^6.0.0",
+    "postcss-cli": "^4.1.0",
+    "postcss-custom-properties": "^6.1.0",
+    "postcss-dir-pseudo-class": "^2.0.0",
+    "postcss-logical": "^1.0.2",
+    "postcss-merge-rules": "^2.1.2",
+    "postcss-nesting": "^4.1.0",
+    "postcss-selector-matches": "^3.0.1",
+    "postcss-size": "^2.0.0",
     "pre-commit": "^1.2.2",
+    "rollup": "^0.49.2",
+    "rollup-plugin-babel": "^3.0.2",
+    "rollup-plugin-uglify": "^2.0.1",
     "stylelint": "^8.0.0",
     "stylelint-config-dev": "^2.0.0"
   },
-  "babel": {
-    "presets": [
-      [
-        "env",
-        {
-          "loose": true,
-          "targets": {
-            "node": "4"
-          }
-        }
-      ]
-    ]
-  },
   "eslintConfig": {
     "extends": "dev"
-  },
-  "gulpConfig": {
-    "html": false,
-    "css-dest": "media-player.css",
-    "js": "media-player.js",
-    "js-dest": "media-player.js",
-    "js-module-name": "MediaPlayer",
-    "use-sass": false
   },
   "stylelint": {
     "extends": "stylelint-config-dev"

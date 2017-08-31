@@ -1,9 +1,9 @@
 dist
 node_modules
 .*
-!.appveyor.yml
+!.*.config.js
 !.gitignore
 !.travis.yml
 *.log*
-media-player.cjs.js
+*.dist.*
 package-lock.json
