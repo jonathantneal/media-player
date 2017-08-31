@@ -127,8 +127,9 @@ style a group of controls or to add new controls.
 The `lang` object is used to provide accessible labels to each control in any
 language. Undefined labels will use English labels.
 
-The `svgs`
-object is used to assign an SVG sprite to each control.
+The `svgs` object is used to assign SVG sprites to each control in each state.
+There may be IE limitations when using external sources with your SVGs, so read
+[SVG `use` with External Source] for details and solutions.
 
 ## Media Player Instance
 
@@ -193,13 +194,6 @@ dispatches whenever play or pause toggles. `timechange` dispatches more rapidly
 than timeupdate. `canplaystart` dispatches the first time media can play
 through.
 
-## Demos
-
-- [Standard Experience](https://jonathantneal.github.io/media-player/)
-- [Right-To-Left Experience](https://jonathantneal.github.io/media-player/rtl.html)
-- [Playlist Experience](https://jonathantneal.github.io/media-player/playlist.html)
-- [Subtitled Experience](https://jonathantneal.github.io/media-player/subtitles.html)
-
 ## Keyboard Controls
 
 ### Spacebar, Enter / Return
@@ -212,25 +206,15 @@ When focused on the **mute button** or the **volume slider**, pressing the
 
 ### Arrows
 
-When focused on the **play button** or the **timeline slider**, pressing the
-**left arrow** or **right arrow** moves the timeline forward or backward. The
-timeline moves by increments of 1 second, unless **shift** is also pressed,
-in which case it moves by 10 seconds.
+When focused on the **play button** or the **timeline slider**, pressing
+**right arrow** or **up arrow** moves the time forward, while pressing
+**left arrow** or **down arrow** moves the time backward. Time is moved by 10
+seconds, unless **shift** is also pressed, in which case it moves 30 seconds.
 
-When focused on the **mute button** or the **volume slider**, pressing the
-**left arrow** or **right arrow** moves the volume up or down. The volume moves
-by increments of 1%, unless **shift** key is also pressed, in which case it
-moves by 10%.
-
-For `ltr` languages written from left to right (like English), the
-**left arrow** moves the timeline backward or the volume down, and the
-**right arrow** moves the timeline forward or the volume up.
-
-For `rtl` languages written from right to left (like Hebrew or Arabic), the
-**left arrow** moves the timeline forward or the volume up, and the
-**right arrow** moves the timeline backward or the volume down.
-
-**[RTL Demo]**
+When focused on the **mute button** or the **volume slider**, pressing
+**right arrow** or **up arrow** increases the volume, while pressing
+**left arrow** or **down arrow** decreases the volume. Volume is moved by 1%,
+unless **shift** is also pressed, in which case it moves 10%.
 
 ## Browser compatibility
 
@@ -239,13 +223,22 @@ This includes Chrome, Edge, Firefox, Internet Explorer 9+, Opera, and Safari 6+.
 Older versions of Edge and Internet Explorer may need additional assistance
 loading SVGs from an external URL.
 
+Read [SVG `use` with External Source] for details and solutions.
+
+## Demos
+
+- [Standard Experience](https://jonathantneal.github.io/media-player/)
+- [Right-To-Left Experience](https://jonathantneal.github.io/media-player/rtl.html)
+- [Playlist Experience](https://jonathantneal.github.io/media-player/playlist.html)
+- [Subtitled Experience](https://jonathantneal.github.io/media-player/subtitles.html)
+
 ## Licensing
 
 [Media Player] and its icons use the CC0 “No Rights Reserved” license.
 
 ---
 
-[Media Player] compiles as 2.56 kB of JS and 635 B of CSS (gzipped).
+[Media Player] compiles as 2.56 kB of JS and 613 B of CSS (gzipped).
 
 [Media Player]: https://github.com/jonathantneal/media-player
 
@@ -256,3 +249,4 @@ loading SVGs from an external URL.
 
 [PostCSS Import]: https://github.com/postcss/postcss-import
 [RTL Demo]: https://jonathantneal.github.io/media-player/rtl.html
+[SVG `use` with External Source]: https://css-tricks.com/svg-use-external-source/
