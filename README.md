@@ -194,7 +194,7 @@ keyboard controls.
 
 Three new events are dispatched by [Media Player]. `playchange`
 dispatches whenever play or pause toggles. `timechange` dispatches more rapidly
-than timeupdate. `canplaystart` dispatches the first time media can play
+than `timeupdate`. `canplaystart` dispatches the first time media can play
 through.
 
 ## Keyboard Controls
