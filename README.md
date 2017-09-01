@@ -124,6 +124,9 @@ Note the convenience classes like `media-control`, `media-symbol`,
 `media-slider`, `media-range` and `media-range-meter`. These make it easier to
 style a group of controls or to add new controls.
 
+Because flexbox is used to arrange the controls, the `order` property can be
+used to easily rearrange them.
+
 The `lang` object is used to provide accessible labels to each control in any
 language. Undefined labels will use English labels.
 
