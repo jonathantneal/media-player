@@ -1,5 +1,10 @@
 # Changes to Media Player
 
+### 1.1.0 (Aug 31, 2017)
+
+- Update default ordering of elements
+- Update documentation
+
 ### 1.0.0 (Aug 30, 2017)
 
 - Added ability to configure time and volume directions
