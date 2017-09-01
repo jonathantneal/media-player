@@ -124,6 +124,9 @@ Note the convenience classes like `media-control`, `media-symbol`,
 `media-slider`, `media-range` and `media-range-meter`. These make it easier to
 style a group of controls or to add new controls.
 
+Because flexbox is used to arrange the controls, the `order` property can be
+used to easily rearrange them.
+
 The `lang` object is used to provide accessible labels to each control in any
 language. Undefined labels will use English labels.
 
@@ -191,7 +194,7 @@ keyboard controls.
 
 Three new events are dispatched by [Media Player]. `playchange`
 dispatches whenever play or pause toggles. `timechange` dispatches more rapidly
-than timeupdate. `canplaystart` dispatches the first time media can play
+than `timeupdate`. `canplaystart` dispatches the first time media can play
 through.
 
 ## Keyboard Controls

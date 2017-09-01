@@ -69,7 +69,7 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 	// player toolbar
 	self.toolbar = $('div',
 		{ class: `${prefix}-toolbar`, role: 'toolbar', 'aria-label': lang.player || 'media player' },
-		self.play, self.mute, self.currentTime, self.remainingTime, self.volume, self.time, self.download, self.fullscreen
+		self.play, self.mute,self.volume, self.currentTime, self.time, self.remainingTime, self.download, self.fullscreen
 	);
 
 	// player
