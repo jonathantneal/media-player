@@ -15,7 +15,7 @@ play, pause, move across the timeline, mute, unmute, adjust the volume, enter
 or leave fullscreen, or download the source.
 
 <p align="center">
-  <img src="toolbar-classes.png" alt="Diagram of Media Player" width="665" height="116">
+  <img src="https://jonathantneal.github.io/media-player/toolbar-classes.png" alt="Diagram of Media Player" width="665" height="116">
 </p>
 
 [Media Player] is designed for developers who want complete visual control over
@@ -26,7 +26,7 @@ providing pointer-agnostic scrubbable timelines, and lots of other cool
 sounding stuff.
 
 <p align="center">
-  <img src="time-classes.png" alt="Diagram of Time Slider" width="598" height="82">
+  <img src="https://jonathantneal.github.io/media-player/time-classes.png" alt="Diagram of Time Slider" width="598" height="82">
 </p>
 
 ## Usage
