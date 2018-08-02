@@ -1,20 +1,18 @@
-module.exports = (ctx) => ({
+module.exports = ctx => ({
 	map: ctx.options.map,
 	plugins: [
 		// future compatibility
-		require('postcss-custom-properties')(),
-		require('postcss-apply')(),
-		require('postcss-selector-matches'),
-		require('postcss-logical')(),
-		require('postcss-nesting')(),
-		require('postcss-dir-pseudo-class'),
-		require('postcss-size'),
-
-		// backward compatibility
-		require('autoprefixer')()
+		require('postcss-preset-env')({
+			features: {
+				'custom-properties': {
+					preserve: false
+				}
+			},
+			stage: 0
+		})
 	].concat(
 		// neatness and compression
-		process.argv.includes('--compress') ? [
+		process.argv.includes('--start') ? [
 			require('cssnano')({
 				normalizeUrl: false,
 				preset: ['default', {
@@ -26,10 +24,10 @@ module.exports = (ctx) => ({
 			require('postcss-discard-comments')(),
 			require('postcss-discard-duplicates')(),
 			require('postcss-discard-overridden')(),
-			require('postcss-discard-empty')(),
 			require('postcss-merge-rules')(),
 			require('postcss-calc')(),
-			compress()
+			compress(),
+			prettier()
 		]
 	)
 });
@@ -64,5 +62,35 @@ const compress = postcss.plugin('postcss-discard-tested-duplicate-declarations',
 				}
 			}
 		})
+	});
+});
+
+// plugin
+const prettier = postcss.plugin('postcss-prettier', () => root => {
+	const raws = {
+		decl: {
+			before: '\n\t',
+			between: ': '
+		},
+		rule: {
+			before: '\n\n',
+			between: ' ',
+			semicolon: true,
+			after: '\n'
+		}
+	};
+
+	root.walk(node => {
+		node.raws = raws[node.type] || {};
+
+		if (node.type === 'rule') {
+			node.nodes = node.nodes.sort(
+				(a, b) => a.prop < b.prop
+					? -1
+				: a.prop > b.prop
+					? 1
+				: 0
+			);
+		}
 	});
 });

@@ -1,7 +1,8 @@
 # Media Player [<img src="https://jonathantneal.github.io/media-player/logo.svg" alt="" width="90" height="90" align="right">][Media Player]
 
 [![NPM Version][npm-img]][npm-url]
-[![Linux Build Status][cli-img]][cli-url]
+[![NPM Filesize][fsz-img]][fsz-url]
+[![Build Status][cli-img]][cli-url]
 
 [Media Player] is a tiny, responsive, international, accessible, cross browser,
 easily customizable media player written in plain vanilla JavaScript.
@@ -78,46 +79,40 @@ const player = new MediaPlayer(
 );
 ```
 
-The `prefix` is used before flat class names, which are otherwise:
+The `prefix` option is used to prefix flat class names, which are otherwise:
 
 ```scss
-.media-player {
+.media-player {}
+
   .media-media { /* video or audio element */ }
 
-  .media-toolbar {
-    .media-control.media-play {
+  .media-toolbar {}
+
+    .media-control.media-play {}
       .media-symbol.media-play-symbol { /* play svg */ }
       .media-symbol.media-pause-symbol { /* pause svg */ }
-    }
 
-    .media-control.media-mute {
+    .media-control.media-mute {}
       .media-symbol.media-mute-symbol { /* mute svg */ }
       .media-symbol.media-unmute-symbol { /* unmute svg */ }
-    }
 
     .media-text.media-current-time { /* plain text */ }
     .media-text.media-remaining-time { /* plain text */ }
 
-    .media-slider.media-volume {
+    .media-slider.media-volume {}
       .media-range.media-volume-range { /* full volume */ }
       .media-range.media-volume-meter { /* current volume */ }
-    }
 
-    .media-slider.media-time {
+    .media-slider.media-time {}
       .media-range.media-time-range { /* full duration */ }
       .media-range.media-time-meter { /* elapsed time */ }
-    }
 
-    .media-control.media-download {
+    .media-control.media-download {}
       .media-symbol.media-download-symbol { /* download svg */ }
-    }
 
-    .media-control.media-fullscreen {
+    .media-control.media-fullscreen {}
       .media-symbol.media-enterfullscreen-symbol { /* enter full screen svg */ }
       .media-symbol.media-leavefullscreen-symbol { /* leave full screen svg */ }
-    }
-  }
-}
 ```
 
 Note the convenience classes like `media-control`, `media-symbol`,
@@ -245,10 +240,12 @@ Read [SVG `use` with External Source] for details and solutions.
 
 [Media Player]: https://github.com/jonathantneal/media-player
 
-[npm-url]: https://www.npmjs.com/package/mediaplayer
-[npm-img]: https://img.shields.io/npm/v/mediaplayer.svg
+[cli-img]: https://img.shields.io/travis/jonathantneal/media-player/master.svg
 [cli-url]: https://travis-ci.org/jonathantneal/media-player
-[cli-img]: https://img.shields.io/travis/jonathantneal/media-player.svg
+[fsz-img]: https://img.shields.io/bundlephobia/minzip/mediaplayer.svg
+[fsz-url]: https://www.npmjs.com/package/mediaplayer
+[npm-img]: https://img.shields.io/npm/v/mediaplayer.svg
+[npm-url]: https://www.npmjs.com/package/mediaplayer
 
 [PostCSS Import]: https://github.com/postcss/postcss-import
 [RTL Demo]: https://jonathantneal.github.io/media-player/rtl.html

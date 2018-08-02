@@ -57,11 +57,11 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 	self.volumeRange = $('span', { class: `${prefix}-range ${prefix}-volume-range` }, self.volumeMeter);
 	self.volume = $('button', { class: `${prefix}-slider ${prefix}-volume`, role: 'slider', 'aria-label': lang.volume || 'volume', 'data-dir': volumeDir, click: onVolumeClick, keydown: onVolumeKeydown }, self.volumeRange);
 
-	// download link
-	self.downloadLink = svg(prefix, svgs, 'download');
-	self.download = $('button', { class: `${prefix}-control ${prefix}-download`, 'aria-label': lang.download || 'download', click: onDownloadClick }, self.downloadLink);
+	// download button
+	self.downloadSymbol = svg(prefix, svgs, 'download');
+	self.download = $('button', { class: `${prefix}-control ${prefix}-download`, 'aria-label': lang.download || 'download', click: onDownloadClick }, self.downloadSymbol);
 
-	// fullscreen link
+	// fullscreen button
 	self.enterFullscreenSymbol = svg(prefix, svgs, 'enterFullscreen');
 	self.leaveFullscreenSymbol = svg(prefix, svgs, 'leaveFullscreen');
 	self.fullscreen = $('button', { class: `${prefix}-control ${prefix}-fullscreen`, click: onFullscreenClick }, self.enterFullscreenSymbol, self.leaveFullscreenSymbol);

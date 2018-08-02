@@ -1,9 +1,9 @@
 gh-pages
 node_modules
+media-player.*.*
+package-lock.json
+*.log*
 .*
-!.*.config.js
+!.editorconfig
 !.gitignore
 !.travis.yml
-*.log*
-*.dist.*
-package-lock.json

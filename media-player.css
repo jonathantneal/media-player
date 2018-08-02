@@ -1,103 +1,26 @@
 :root {
-	--player-enter-color: color(#9999ff a(25%));
-	--player-back-fullscreen-color: color(#000000 a(75%));
+	--player-enter-color: color-mod(#9999ff alpha(25%));
+	--player-back-fullscreen-color: color-mod(#000000 alpha(75%));
 	--player-fill-fullscreen-color: #ffffff;
 	--player-range-color: #cccccc;
 	--player-meter-color: #0088dd;
-
-	--player-unset-touch-actions-styles: {
-		-webkit-tap-highlight-color: transparent; /* stylelint-disable-line property-no-vendor-prefix */
-		-webkit-touch-callout: none; /* stylelint-disable-line property-no-vendor-prefix */
-		-webkit-user-select: none; /* stylelint-disable-line property-no-vendor-prefix */
-	};
-
-	--player-unset-button-styles: {
-		background-color: transparent;
-		border-style: none;
-		color: inherit;
-		font: inherit;
-		margin: 0;
-		overflow: visible;
-		padding: 0;
-	};
-
-	--player-toolbar-styles: {
-		align-items: center;
-		cursor: default;
-		direction: ltr;
-		display: flex;
-		flex-wrap: wrap;
-
-		@nest :fullscreen & {
-			background-color: var(--player-back-fullscreen-color);
-			color: var(--player-fill-fullscreen-color);
-			inset-block-end: 0;
-			inset-inline: 0;
-			opacity: .8;
-			position: absolute;
-		}
-	};
-
-	--player-control-styles: {
-		@apply --player-unset-button-styles;
-		@apply --player-unset-touch-actions-styles;
-
-		font-size: 75%;
-		line-height: 1;
-		padding: 1.16667em;
-		text-decoration: none;
-
-		&:matches(:hover, :focus) {
-			background-color: var(--player-enter-color);
-		}
-	};
-
-	--player-slider-styles: {
-		@apply --player-unset-button-styles;
-		@apply --player-unset-touch-actions-styles;
-
-		height: 2.5em;
-		padding: .625em .5em;
-
-		&:focus {
-			background-color: var(--player-enter-color);
-		}
-	};
-
-	--player-range-styles: {
-		background-color: var(--player-range-color);
-		display: block;
-		font-size: 75%;
-		size: 100% 1em;
-	};
-
-	--player-meter-styles: {
-		background-color: var(--player-meter-color);
-		display: block;
-		overflow: hidden;
-		size: 100%;
-	};
-
-	--player-text-styles: {
-		font-size: 75%;
-		padding-inline: .5em;
-		width: 2.5em;
-	};
-
-	--player-symbol-styles: {
-		display: block;
-		fill: currentColor;
-		height: 1em;
-		width: 1em;
-
-		&:matches([aria-hidden="true"]) {
-			display: none;
-		}
-	};
 }
 
 .media-toolbar {
-	@apply --player-toolbar-styles;
+	align-items: center;
+	cursor: default;
+	direction: ltr;
+	display: flex;
+	flex-wrap: wrap;
+
+	@nest :fullscreen & {
+		background-color: var(--player-back-fullscreen-color);
+		color: var(--player-fill-fullscreen-color);
+		inset-block-end: 0;
+		inset-inline: 0;
+		opacity: .8;
+		position: absolute;
+	}
 }
 
 .media-hidden {
@@ -112,8 +35,26 @@
 	position: relative;
 }
 
+.media-control, .media-slider {
+	background-color: transparent;
+	border-style: none;
+	color: inherit;
+	font: inherit;
+	margin: 0;
+	overflow: visible;
+	padding: 0;
+	-webkit-tap-highlight-color: transparent; /* stylelint-disable-line property-no-vendor-prefix */
+	-webkit-touch-callout: none; /* stylelint-disable-line property-no-vendor-prefix */
+	-webkit-user-select: none; /* stylelint-disable-line property-no-vendor-prefix */
+}
+
 .media-slider {
-	@apply --player-slider-styles;
+	height: 2.5em;
+	padding: .625em .5em;
+
+	&:focus {
+		background-color: var(--player-enter-color);
+	}
 }
 
 .media-time {
@@ -126,21 +67,45 @@
 }
 
 .media-range {
-	@apply --player-range-styles;
+	background-color: var(--player-range-color);
+	display: block;
+	font-size: 75%;
+	height: 1em;
+	width: 100%;
 }
 
 .media-meter {
-	@apply --player-meter-styles;
+	background-color: var(--player-meter-color);
+	display: block;
+	height: 100%;
+	overflow: hidden;
+	width: 100%;
 }
 
 .media-text {
-	@apply --player-text-styles;
+	font-size: 75%;
+	padding-inline: .5em;
+	width: 2.5em;
 }
 
 .media-control {
-	@apply --player-control-styles;
+	font-size: 75%;
+	line-height: 1;
+	padding: 1.16667em;
+	text-decoration: none;
+
+	&:matches(:hover, :focus) {
+		background-color: var(--player-enter-color);
+	}
 }
 
 .media-symbol {
-	@apply --player-symbol-styles;
+	display: block;
+	fill: currentColor;
+	height: 1em;
+	width: 1em;
+
+	&:matches([aria-hidden="true"]) {
+		display: none;
+	}
 }
