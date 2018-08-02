@@ -67,8 +67,8 @@ scope and avoid unrelated commits.
 
 That’s it! Now [open a pull request] with a clear title and description.
 
-[already been reported]: issues
-[fork this project]:     fork
+[already been reported]: https://github.com/jonathantneal/media-player/issues
+[fork this project]:     https://github.com/jonathantneal/media-player/fork
 [live example]:          https://codepen.io/pen
 [open a pull request]:   https://help.github.com/articles/using-pull-requests/
 [reduced test case]:     https://css-tricks.com/reduced-test-cases/

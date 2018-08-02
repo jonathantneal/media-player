@@ -1,9 +1,16 @@
 # Changes to Media Player
 
+### 2.0.0 (Aug 2, 2018)
+
+- Removed support for Node 4.x
+- Fixed misnamed property (`downloadLink`, now `downloadSymbol`)
+- Changed browserslist to `.browserslistrc` to compile distributed CSS and JS
+- Updated documentation
+
 ### 1.1.0 (Aug 31, 2017)
 
-- Update default ordering of elements
-- Update documentation
+- Updated default ordering of elements
+- Updated documentation
 
 ### 1.0.0 (Aug 30, 2017)
 
