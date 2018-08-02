@@ -81,9 +81,13 @@ const prettier = postcss.plugin('postcss-prettier', () => root => {
 	};
 
 	root.walk(node => {
-		node.raws = raws[node.type] || {};
+		node.raws = Object.assign({}, raws[node.type]);
 
 		if (node.type === 'rule') {
+			if (node.parent.first === node) {
+				node.raws.before = '';
+			}
+
 			node.nodes = node.nodes.sort(
 				(a, b) => a.prop < b.prop
 					? -1
