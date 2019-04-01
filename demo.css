@@ -1,0 +1,106 @@
+html {
+	font: 300 100%/1.5 "Helvetica Neue", sans-serif;
+	-ms-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%;
+}
+
+body {
+	margin: 1.25em;
+	padding: 0 calc((100% - 60em) / 2);
+}
+
+header img {
+	height: 20px;
+	width: 80px;
+}
+
+h1 {
+	line-height: 1;
+	margin: 0 0 .25em;
+}
+
+h2 {
+	box-shadow: inset 0 -1px 0 0 #dddddd;
+	padding-bottom: .25em;
+	margin-top: 3em;
+}
+
+h3 {
+	color: #333333;
+	font-size: 1em;
+	margin-bottom: -.5em;
+	margin-top: 2em;
+}
+
+img {
+	display: block;
+	height: auto;
+	margin: 0 auto;
+	vertical-align: top;
+	width: 100%;
+}
+
+a {
+	color: #0077dd;
+	text-decoration: none;
+}
+
+a:hover, a:focus {
+	text-decoration: underline;
+}
+
+section {
+	margin: 0 1em;
+	padding: 0 calc((100% - 42em) / 2);
+}
+
+p a, p strong {
+	display: inline-block;
+	font-weight: bolder;
+}
+
+p code {
+	background-color: #f5f5f5;
+	border-radius: .25em;
+	padding: .5em;
+}
+
+body > p,
+body > ul {
+	margin: 1.5em auto;
+	max-width: 40em;
+}
+
+ul {
+	padding: 0 1em;
+}
+
+ul > li {
+	margin: .5em 0;
+}
+
+pre {
+	background-color: #f9f9f9;
+	border-radius: 2px;
+	box-shadow: 0 0 0 1px #cccccc;
+	overflow: auto;
+	-webkit-overflow-scrolling: touch;
+	-ms-overflow-style: -ms-autohiding-scrollbar;
+	padding: 1em;
+}
+
+.pl-c {
+	color: #777777;
+}
+
+.pl-k {
+	color: #cc4444;
+}
+
+.pl-c1, .pl-e, .pl-v {
+	color: #0055cc;
+}
+
+.pl-s {
+	color: #008800;
+}

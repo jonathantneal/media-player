@@ -1,0 +1,35 @@
+.media-media {
+	transition: max-height 600ms ease-in-out;
+}
+
+.media-media[src$=".mp3"] {
+	max-height: 0;
+}
+
+.play-list {
+	letter-spacing: .1em;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+.play-item {
+	margin: 0;
+	padding: 0;
+}
+
+.play-link {
+	display: block;
+	font-size: .75em;
+	padding: .5em 1em;
+}
+
+.play-link:hover, .play-link:focus {
+	color: #000000;
+	text-decoration: none;
+}
+
+.play-link.active {
+	background-color: #eeeeee;
+	font-weight: 700;
+}

@@ -1,0 +1,26 @@
+.subtitles {
+	height: 50vh;
+	margin: 1.25em auto;
+	max-width: 60em;
+	min-height: 13em;
+	-webkit-overflow-scrolling: touch;
+	overflow-y: scroll;
+	padding: 0;
+	word-wrap: break-word;
+}
+
+.subtitles p {
+	line-height: 1.25;
+	margin: 0;
+	padding: .25em .5em;
+}
+
+@media (max-width: 480px) {
+	.subtitles p {
+		font-size: 100%;
+	}
+}
+
+.subtitles p.active {
+	background-color: #ffff00;
+}
