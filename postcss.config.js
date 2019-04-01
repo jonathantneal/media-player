@@ -1,18 +1,17 @@
 module.exports = ctx => ({
-	map: ctx.options.map,
+	map: !process.argv.includes('--browser'),
 	plugins: [
 		// future compatibility
 		require('postcss-preset-env')({
 			features: {
-				'custom-properties': {
-					preserve: false
-				}
+				'color-mod-function': { unresolved: 'warn' },
+				'custom-properties': { preserve: false }
 			},
 			stage: 0
 		})
 	].concat(
 		// neatness and compression
-		process.argv.includes('--start') ? [
+		process.argv.includes('--browser') || process.argv.includes('--gh-pages') ? [
 			require('cssnano')({
 				normalizeUrl: false,
 				preset: ['default', {

@@ -1,5 +1,9 @@
 # Changes to Media Player
 
+### 2.0.1 (Apr 1, 2019)
+
+- Fixed issue with keyboard controls
+
 ### 2.0.0 (Aug 2, 2018)
 
 - Removed support for Node 4.x

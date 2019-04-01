@@ -1,9 +1,10 @@
-gh-pages
 node_modules
-media-player.*.*
 package-lock.json
 *.log*
 .*
 !.editorconfig
 !.gitignore
+!.rollup.*
 !.travis.yml
+/browser.*
+/index.*

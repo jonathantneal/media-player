@@ -293,7 +293,7 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 		if (37 <= keyCode && 40 >= keyCode) {
 			event.preventDefault();
 
-			const isLTR = /^(btt|ltr)$/.tests(timeDir);
+			const isLTR = /^(btt|ltr)$/.test(timeDir);
 			const offset = 37 === keyCode || 39 === keyCode ? keyCode - 38 : keyCode - 39;
 
 			media.currentTime = Math.max(0, Math.min(duration, currentTime + offset * (isLTR ? 1 : -1) * (shiftKey ? 10 : 1)));
@@ -310,7 +310,7 @@ export default function MediaPlayer(media, rawopts) { // eslint-disable-line com
 		if (37 <= keyCode && 40 >= keyCode) {
 			event.preventDefault();
 
-			const isLTR = /^(btt|ltr)$/.tests(volumeDir);
+			const isLTR = /^(btt|ltr)$/.test(volumeDir);
 			const offset = 37 === keyCode || 39 === keyCode ? keyCode - 38 : isLTR ? 39 - keyCode : keyCode - 39;
 
 			media.volume = Math.max(0, Math.min(1, media.volume + offset * (isLTR ? 0.1 : -0.1) * (shiftKey ? 1 : 0.2)));

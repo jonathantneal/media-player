@@ -32,6 +32,15 @@ sounding stuff.
 
 ## Usage
 
+Add the required JavaScript and default CSS to your page.
+
+```html
+<script src="https://unpkg.com/mediaplayer/browser.js"></script>
+<link rel="stylesheet" src="https://unpkg.com/mediaplayer/browser.css"></script>
+```
+
+### Node Usage
+
 ```bash
 npm install --save mediaplayer
 ```
@@ -236,7 +245,7 @@ Read [SVG `use` with External Source] for details and solutions.
 
 ---
 
-[Media Player] compiles as 2.56 kB of JS and 613 B of CSS (gzipped).
+[Media Player] adds up to 2.47 kB of JS and 582 B of CSS to your project.
 
 [Media Player]: https://github.com/jonathantneal/media-player
 
